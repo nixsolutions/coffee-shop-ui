@@ -4,12 +4,11 @@ import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 const httpLink = createHttpLink({
-  uri: 'https://graphql.myshopify.com/api/graphql'
+  uri: process.env.REACT_APP_API_URI
 });
-
 const middlewareLink = setContext(() => ({
   headers: {
-    'X-Shopify-Storefront-Access-Token': 'dd4d4dc146542ba7763305d71d1b3d38'
+    'X-Shopify-Storefront-Access-Token': process.env.REACT_APP_API_TOKEN
   }
 }));
 
@@ -18,7 +17,9 @@ const cache = new InMemoryCache();
 cache.writeData({
   data: {
     isOpenSideBar: false,
-    isOpenCart: false
+    isOpenCart: false,
+    cartItems: [],
+    cartCounter: 0
   }
 });
 

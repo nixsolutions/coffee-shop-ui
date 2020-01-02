@@ -6,6 +6,7 @@ import { Typography } from '@material-ui/core';
 import GET_PRODUCT from './GraphQl';
 import ImageSlider from '../ImageSlider';
 import useStyles from './Styles';
+import Spinner from '../Spinner';
 
 export default function Product({ match: { params } }) {
   const classes = useStyles();
@@ -16,7 +17,7 @@ export default function Product({ match: { params } }) {
     }
   });
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Spinner />;
 
   return (
     <div>

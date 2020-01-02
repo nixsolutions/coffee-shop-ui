@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    ports:
+      - '3001:3000'
+    networks:
+      - coffee-shop-ui
+networks:
+  coffee-shop-ui:
+    name: coffee-shop-ui

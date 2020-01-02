@@ -2,52 +2,17 @@ import gql from 'graphql-tag';
 
 const GET_PRODUCTS = gql`
   query GET_PRODUCTS {
-    shop {
-      name
-      description
-      products(first: 20) {
-        pageInfo {
-          hasNextPage
-          hasPreviousPage
-        }
-        edges {
-          node {
-            id
-            title
-            options {
-              id
-              name
-              values
-            }
-            variants(first: 250) {
-              pageInfo {
-                hasNextPage
-                hasPreviousPage
-              }
-              edges {
-                node {
-                  id
-                  title
-                  selectedOptions {
-                    name
-                    value
-                  }
-                  image {
-                    src
-                  }
-                  price
-                }
-              }
-            }
-            images(first: 250) {
-              pageInfo {
-                hasNextPage
-                hasPreviousPage
-              }
-              edges {
-                node {
-                  src
-                }
+    products(first: 5) {
+      edges {
+        node {
+          id
+          title
+          description
+          images(first: 2) {
+            edges {
+              node {
+                id
+                src
               }
             }
           }
@@ -56,4 +21,11 @@ const GET_PRODUCTS = gql`
     }
   }
 `;
-export default GET_PRODUCTS;
+
+const TOGGLE_CART = gql`
+  mutation addOrRemoveFromCart($launchId: ID!) {
+    addOrRemoveFromCart(id: $launchId) @client
+  }
+`;
+
+export { GET_PRODUCTS, TOGGLE_CART };
