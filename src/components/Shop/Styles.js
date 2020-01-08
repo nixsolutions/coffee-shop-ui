@@ -9,8 +9,8 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: '30px'
   },
   card: {
-    maxWidth: 400,
-    height: 'auto'
+    maxWidth: 345,
+    height: 450
   },
   media: {
     height: 400

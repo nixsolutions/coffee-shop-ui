@@ -1,4 +1,5 @@
 import React from 'react';
+import { useQuery } from '@apollo/react-hooks';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -17,10 +18,11 @@ import useStyles from './Styles';
 import SideBar from '../SideBar';
 import Cart from '../Cart';
 import client from '../../apollo/apolloClient';
+import GET_CART_ITEM from './GraphQl';
 
 export default function Header() {
   const classes = useStyles();
-
+  const { data: { cartItems } = 0 } = useQuery(GET_CART_ITEM);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -83,7 +85,7 @@ export default function Header() {
         onClick={() => client.writeData({ data: { isOpenCart: true } })}
       >
         <IconButton color="inherit">
-          <Badge badgeContent={2} color="secondary">
+          <Badge badgeContent={cartItems.length} color="secondary">
             <ShoppingCart />
           </Badge>
         </IconButton>
@@ -141,7 +143,7 @@ export default function Header() {
             </IconButton>
             <IconButton color="inherit">
               <Badge
-                badgeContent={2}
+                badgeContent={cartItems.length}
                 color="secondary"
                 onClick={() => client.writeData({ data: { isOpenCart: true } })}
               >
