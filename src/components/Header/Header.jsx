@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Link, withRouter } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -6,8 +8,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -19,8 +19,10 @@ import SideBar from '../SideBar';
 import Cart from '../Cart';
 import client from '../../apollo/apolloClient';
 import GET_CART_ITEM from './GraphQl';
+import MobileMenuRender from './MobileMenu';
+import MenuRender from './Menu';
 
-export default function Header() {
+function Header() {
   const classes = useStyles();
   const { data: { cartItems } = 0 } = useQuery(GET_CART_ITEM);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -45,65 +47,8 @@ export default function Header() {
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
-
   const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem
-        onClick={() => client.writeData({ data: { isOpenCart: true } })}
-      >
-        <IconButton color="inherit">
-          <Badge badgeContent={cartItems.length} color="secondary">
-            <ShoppingCart />
-          </Badge>
-        </IconButton>
-        <p>Cart</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
+  const menuId = 'primary-search-account-menu';
 
   return (
     <div className={classes.grow}>
@@ -118,8 +63,14 @@ export default function Header() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Cooffee-Shop
+          <Typography
+            className={classes.title}
+            variant="h6"
+            noWrap
+            component={Link}
+            to="/"
+          >
+            Coffee-Shop
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -176,8 +127,27 @@ export default function Header() {
       </AppBar>
       <SideBar />
       <Cart />
-      {renderMobileMenu}
-      {renderMenu}
+      <MobileMenuRender
+        mobileMoreAnchorEl={mobileMoreAnchorEl}
+        isMobileMenuOpen={isMobileMenuOpen}
+        handleMobileMenuClose={handleMobileMenuClose}
+        client={client}
+        cartItems={cartItems}
+        handleProfileMenuOpen={handleProfileMenuOpen}
+      />
+      <MenuRender
+        anchorEl={anchorEl}
+        isMenuOpen={isMenuOpen}
+        handleMenuClose={handleMenuClose}
+      />
     </div>
   );
 }
+
+Header.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func
+  }).isRequired
+};
+
+export default withRouter(Header);

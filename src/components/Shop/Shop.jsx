@@ -17,9 +17,7 @@ import { GET_PRODUCTS } from './GraphQl';
 export default function Shop() {
   const classes = useStyles();
   const [productsIds, setProductsIds] = useState(store.get('ids') || []);
-  const { loading, error, data: { products } = {}, client } = useQuery(
-    GET_PRODUCTS
-  );
+  const { loading, data: { products } = {}, client } = useQuery(GET_PRODUCTS);
 
   const addToCart = id => {
     const listProducts = store.get('ids') || [];
@@ -32,7 +30,6 @@ export default function Shop() {
   }, [client, productsIds]);
 
   if (loading) return <Spinner />;
-  if (error) return <p>{error.message}</p>;
 
   return (
     <Grid

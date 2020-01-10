@@ -2,6 +2,7 @@ import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import store from 'store';
 
 const httpLink = createHttpLink({
   uri: process.env.REACT_APP_API_URI
@@ -19,7 +20,11 @@ cache.writeData({
     isOpenSideBar: false,
     isOpenCart: false,
     cartItems: [],
-    cartCounter: 0
+    cartCounter: 0,
+    customerToken:
+      (store.get('customer') && store.get('customer').token) || null,
+    customerTokenExpDate:
+      (store.get('customer') && store.get('customer').expDate) || null
   }
 });
 
