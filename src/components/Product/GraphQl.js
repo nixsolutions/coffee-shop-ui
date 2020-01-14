@@ -8,11 +8,33 @@ const GET_PRODUCT = gql`
         title
         description
         tags
+        availableForSale
+        descriptionHtml
+        vendor
+        priceRange {
+          maxVariantPrice {
+            amount
+            currencyCode
+          }
+          minVariantPrice {
+            amount
+            currencyCode
+          }
+        }
         images(first: 5) {
           edges {
             node {
               id
               src
+            }
+          }
+        }
+        metafields(first: 1) {
+          edges {
+            node {
+              key
+              value
+              description
             }
           }
         }

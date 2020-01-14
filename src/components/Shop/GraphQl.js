@@ -8,6 +8,7 @@ const GET_PRODUCTS = gql`
           id
           title
           description
+          availableForSale
           images(first: 2) {
             edges {
               node {

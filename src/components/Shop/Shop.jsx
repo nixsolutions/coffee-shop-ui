@@ -13,6 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import useStyles from './Styles';
 import Spinner from '../Spinner';
 import { GET_PRODUCTS } from './GraphQl';
+import noPhotoAvailable from '../../media/noPhotoAvailable.png';
 
 export default function Shop() {
   const classes = useStyles();
@@ -49,12 +50,16 @@ export default function Shop() {
           key={node.id}
         >
           <Card className={classes.card}>
-            <CardActionArea>
+            <CardActionArea component={Link} to={`/shop/${node.id}`}>
               <CardMedia
                 component="img"
                 alt="Contemplative Reptile"
                 height="250"
-                image={node.images.edges[0].node.src}
+                image={
+                  node.images.edges.length !== 0
+                    ? node.images.edges[0].node.src
+                    : noPhotoAvailable
+                }
                 title={node.title}
               />
               <CardContent>
