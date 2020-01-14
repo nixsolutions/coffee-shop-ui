@@ -5,17 +5,16 @@ import useStyles from './Styles';
 
 export default function ImageSlider({ images }) {
   const classes = useStyles();
-  const properties = {
-    duration: 5000,
-    transitionDuration: 500,
-    infinite: false,
-    indicators: false,
-    arrows: true
-  };
   const Slideshow = () => {
     return (
       <div className="slide-container">
-        <Slide {...properties}>
+        <Slide
+          duration="5000"
+          transitionDuration="500"
+          infinite={false}
+          indicators={false}
+          arrows
+        >
           {images.map(({ node }) => (
             <div className="each-slide">
               <div
