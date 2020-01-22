@@ -1,11 +1,11 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
-  list: {
-    width: 400
+  quantityProduct: {
+    width: '40px'
   },
-  fullList: {
-    width: 'auto'
+  labelQuantiry: {
+    marginTop: '10px'
   }
 });
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
@@ -18,15 +18,15 @@ import useStyles from './Styles';
 import SideBar from '../SideBar';
 import Cart from '../Cart';
 import client from '../../apollo/apolloClient';
-import GET_CART_ITEM from './GraphQl';
+import GET_CART_ITEM_COUNT from './GraphQl';
 import MobileMenuRender from './MobileMenu';
 import MenuRender from './Menu';
 
 function Header() {
   const classes = useStyles();
-  const { data: { cartItems } = 0 } = useQuery(GET_CART_ITEM);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const { data } = useQuery(GET_CART_ITEM_COUNT);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -94,7 +94,7 @@ function Header() {
             </IconButton>
             <IconButton color="inherit">
               <Badge
-                badgeContent={cartItems.length}
+                badgeContent={data.bucketItemsCount}
                 color="secondary"
                 onClick={() => client.writeData({ data: { isOpenCart: true } })}
               >
@@ -132,7 +132,7 @@ function Header() {
         isMobileMenuOpen={isMobileMenuOpen}
         handleMobileMenuClose={handleMobileMenuClose}
         client={client}
-        cartItems={cartItems}
+        bucketItemsCount={data.bucketItemsCount}
         handleProfileMenuOpen={handleProfileMenuOpen}
       />
       <MenuRender

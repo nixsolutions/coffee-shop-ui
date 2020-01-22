@@ -1,9 +1,9 @@
 import gql from 'graphql-tag';
 
-const GET_CART_ITEM = gql`
+const GET_CART_ITEM_COUNT = gql`
   query {
-    cartItems @client
+    bucketItemsCount @client
   }
 `;
 
-export default GET_CART_ITEM;
+export default GET_CART_ITEM_COUNT;

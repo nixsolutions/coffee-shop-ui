@@ -12,27 +12,44 @@ const CART_ITEM = gql`
   }
 `;
 
-const GET_PRODUCTS_BY_ID = gql`
-  query getProducts($ids: [ID!]!) {
-    nodes(ids: $ids) {
-      ... on Product {
-        title
-        handle
-        descriptionHtml
+const GET_CHECKOUT_ITEMS = gql`
+  query getCheckout($id: ID!) {
+    node(id: $id) {
+      ... on Checkout {
         id
-        images(first: 1) {
-          edges {
-            node {
-              id
-              src
-            }
-          }
+        totalPriceV2 {
+          amount
         }
-        variants(first: 1) {
+        totalTaxV2 {
+          amount
+        }
+        subtotalPriceV2 {
+          amount
+        }
+        lineItems(first: 10) {
           edges {
             node {
-              price
               id
+              title
+              quantity
+              variant {
+                id
+                priceV2 {
+                  amount
+                  currencyCode
+                }
+                product {
+                  id
+                  images(first: 1) {
+                    edges {
+                      node {
+                        altText
+                        originalSrc
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -41,4 +58,4 @@ const GET_PRODUCTS_BY_ID = gql`
   }
 `;
 
-export { CART_OPEN_QUERY, GET_PRODUCTS_BY_ID, CART_ITEM };
+export { CART_OPEN_QUERY, GET_CHECKOUT_ITEMS, CART_ITEM };
