@@ -4,93 +4,98 @@ import Button from '@material-ui/core/Button';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import IconButton from '@material-ui/core/IconButton';
-import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import { useQuery } from '@apollo/react-hooks';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { CART_OPEN_QUERY, GET_PRODUCTS_BY_ID, CART_ITEM } from './GraphQL';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { CART_OPEN_QUERY, GET_CHECKOUT_ITEMS } from './GraphQL';
 import useStyles from './Styles';
+import Spinner from '../Spinner';
+import LineItem from '../LineItem';
+import { CHECKOUT_LINE_ITEMS_REPLACE, GET_CHECKOUT_ID } from '../Shop/GraphQl';
 
 export default function Cart() {
   const classes = useStyles();
-  const { data: { cartItems } = 0 } = useQuery(CART_ITEM);
-  const productIds = store.get('ids');
+  const cartId = store.get('checkoutId');
+  const { data: { isOpenCart } = false, client } = useQuery(CART_OPEN_QUERY);
+  const { data: { checkoutId } = {} } = useQuery(GET_CHECKOUT_ID);
+  const { data, loading } = useQuery(GET_CHECKOUT_ITEMS, {
+    variables: { id: cartId }
+  });
 
-  const toggleDrawer = (client, open) => event => {
-    if (event && event.currentTarget.className === 'makeStyles-list-160') {
+  const [
+    checkoutLineItemsReplace,
+    { loading: checkoutReplaceLoad }
+  ] = useMutation(CHECKOUT_LINE_ITEMS_REPLACE, {
+    onCompleted: () => {
+      client.writeData({ data: { bucketItemsCount: 0 } });
+    },
+    refetchQueries: [
+      {
+        query: GET_CHECKOUT_ITEMS,
+        variables: { id: checkoutId }
+      }
+    ]
+  });
+
+  const toggleDrawer = open => event => {
+    if (event && event.currentTarget.id === 'cart') {
       return;
     }
     client.writeData({ data: { isOpenCart: open } });
   };
 
-  const removeAllItem = client => {
-    store.remove('ids');
-    client.writeData({ data: { cartItems: [] } });
+  const removeAllItem = () => {
+    checkoutLineItemsReplace({
+      variables: {
+        checkoutId,
+        lineItems: []
+      }
+    });
+    store.set('cartItems', []);
   };
 
-  const sideList = (client, data) => (
+  const sideList = () => (
     <div
+      id="cart"
       className={classes.list}
       role="presentation"
-      onClick={toggleDrawer(client, false)}
+      onClick={toggleDrawer(false)}
     >
-      {productIds === undefined ? (
-        <p>Clear</p>
-      ) : (
-        <>
-          <List>
-            <Typography variant="h5" align="center">
-              Cart
-            </Typography>
-            {data &&
-              data.nodes.map(node => (
-                <ListItem dense button>
-                  <ListItemAvatar>
-                    <Avatar
-                      alt={node.title}
-                      src={node.images.edges[0].node.src}
-                    />
-                  </ListItemAvatar>
-                  <ListItemText primary={node.title} />
-                  <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="comments">
-                      <DeleteIcon />
-                    </IconButton>
-                  </ListItemSecondaryAction>
-                </ListItem>
-              ))}
-          </List>
-          <Divider />
-          <Button
-            fullWidth
-            color="secondary"
-            onClick={() => removeAllItem(client)}
-          >
+      <>
+        <List>
+          <Typography variant="h5" align="center">
+            Cart
+          </Typography>
+          {data &&
+            data.node.lineItems.edges.map(({ node }) => (
+              <LineItem
+                key={node.id}
+                product={node}
+                cartItemsQuery={GET_CHECKOUT_ITEMS}
+              />
+            ))}
+        </List>
+        <Divider />
+        {data && data.node.lineItems.edges.length > 0 ? (
+          <Button fullWidth color="secondary" onClick={() => removeAllItem()}>
             Clear cart
           </Button>
-        </>
-      )}
+        ) : (
+          <Typography align="center" variant="h4">
+            Cart is empty
+          </Typography>
+        )}
+      </>
     </div>
   );
-
-  const { data: { isOpenCart } = false, client } = useQuery(CART_OPEN_QUERY);
-  const { data, loading } = useQuery(GET_PRODUCTS_BY_ID, {
-    variables: { ids: cartItems }
-  });
 
   return (
     <SwipeableDrawer
       open={isOpenCart}
-      onClose={toggleDrawer(client, false)}
-      onOpen={toggleDrawer(client, true)}
+      onClose={toggleDrawer(false)}
+      onOpen={toggleDrawer(true)}
       anchor="right"
     >
-      {loading ? <p>Loading...</p> : sideList(client, data)}
+      {loading || checkoutReplaceLoad ? <Spinner /> : sideList(client)}
     </SwipeableDrawer>
   );
 }

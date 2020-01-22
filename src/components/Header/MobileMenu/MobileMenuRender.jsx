@@ -14,7 +14,7 @@ export default function MobileMenuRender({
   handleMobileMenuClose,
   client,
   handleProfileMenuOpen,
-  cartItems
+  bucketItemsCount
 }) {
   return (
     <Menu
@@ -38,7 +38,7 @@ export default function MobileMenuRender({
         onClick={() => client.writeData({ data: { isOpenCart: true } })}
       >
         <IconButton color="inherit">
-          <Badge badgeContent={cartItems.length} color="secondary">
+          <Badge badgeContent={bucketItemsCount} color="secondary">
             <ShoppingCart />
           </Badge>
         </IconButton>
@@ -65,5 +65,5 @@ MobileMenuRender.propTypes = {
   handleMobileMenuClose: PropTypes.func.isRequired,
   handleProfileMenuOpen: PropTypes.func.isRequired,
   client: PropTypes.objectOf.isRequired,
-  cartItems: PropTypes.arrayOf.isRequired
+  bucketItemsCount: PropTypes.number.isRequired
 };

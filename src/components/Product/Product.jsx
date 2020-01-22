@@ -33,7 +33,7 @@ export default function Product({ match: { params } }) {
         <ImageSlider
           images={
             node.images.edges.length !== 0
-              ? node.images.edges[0].node.src
+              ? node.images.edges
               : [{ node: { src: noPhotoAvailable } }]
           }
         />

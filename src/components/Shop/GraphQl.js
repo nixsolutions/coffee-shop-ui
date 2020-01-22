@@ -17,16 +17,82 @@ const GET_PRODUCTS = gql`
               }
             }
           }
+          variants(first: 1) {
+            edges {
+              node {
+                id
+              }
+            }
+          }
         }
       }
     }
   }
 `;
 
-const TOGGLE_CART = gql`
-  mutation addOrRemoveFromCart($launchId: ID!) {
-    addOrRemoveFromCart(id: $launchId) @client
+const CREATE_CHECKOUT = gql`
+  mutation checkoutCreate($input: CheckoutCreateInput!) {
+    checkoutCreate(input: $input) {
+      checkoutUserErrors {
+        message
+        field
+      }
+      checkout {
+        id
+        lineItems(first: 10) {
+          edges {
+            node {
+              id
+              quantity
+              variant {
+                id
+              }
+            }
+          }
+        }
+      }
+    }
   }
 `;
 
-export { GET_PRODUCTS, TOGGLE_CART };
+const GET_CHECKOUT_ID = gql`
+  query checkoutId {
+    checkoutId @client
+  }
+`;
+
+const CHECKOUT_LINE_ITEMS_REPLACE = gql`
+  mutation checkoutLineItemsReplace(
+    $checkoutId: ID!
+    $lineItems: [CheckoutLineItemInput!]!
+  ) {
+    checkoutLineItemsReplace(checkoutId: $checkoutId, lineItems: $lineItems) {
+      userErrors {
+        code
+        field
+        message
+      }
+      checkout {
+        id
+        lineItems(first: 10) {
+          edges {
+            node {
+              id
+              quantity
+              variant {
+                id
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export {
+  GET_PRODUCTS,
+  CREATE_CHECKOUT,
+  GET_CHECKOUT_ID,
+  CHECKOUT_LINE_ITEMS_REPLACE
+};
