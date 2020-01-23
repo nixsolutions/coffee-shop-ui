@@ -1,38 +1,51 @@
 import React from 'react';
-import { Slide } from 'react-slideshow-image';
 import useStyles from './Style';
+import slide1 from '../../media/slide1.jpg';
+import { Search as SearchIcon } from '@material-ui/icons/';
+import { InputBase } from '@material-ui/core/';
 
-const slideImages = [
-    'https://www.incimages.com/uploaded_files/image/970x450/getty_938993594_401542.jpg',
-    'https://24tv.ua/resources/photos/news/201909/1206267.jpg?1568644662000',
-    'https://st2.depositphotos.com/1177973/6745/i/950/depositphotos_67454865-stock-photo-many-cups-of-coffee-top.jpg'
-  ];
-   
-  const properties = {
-    duration: 5000,
-    transitionDuration: 500,
-    infinite: true,
-    indicators: true,
-    arrows: true,
-    onChange: (oldIndex, newIndex) => {
-      console.log(`slide transition from ${oldIndex} to ${newIndex}`);
-    }
-  }
-   
-  const Home = () => {
+function Home(){   
+    const classes = useStyles();    
+    const Home = () => {
     const classes = useStyles();
-    return (
-      <div className="slide-container">
-        <Slide {...properties}>
-          {
-            slideImages.map((each, index) => 
-            <div className="each-slide">
-              <img className={classes.slideImages} key={index} src={each} />
-            </div>)
-          }
-        </Slide>
-      </div>
-    )
-  }
+        return (
+            <img className={classes.slideImages} src={slide1}/>
+        )
+    }
+    const CategoriesList = () => {
+        const categories = ['Type1', 'Type2', 'Type3', 'Type4'];
+        const listItems = categories.map((category) =>
+          <li key={category}>
+            <button className={classes.catName} type="button">
+                {category}
+            </button>
+          </li>
+          
+        );
+        return (
+          <ul className={classes.catList}>{listItems}</ul>
+        );
+    }
 
-export default Home;  
+    return  (
+        <div>
+            <Home/>
+            <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                    <SearchIcon />
+                </div>
+                <InputBase
+                placeholder="Search…"
+                classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+                />
+            </div>
+            <CategoriesList/>
+        </div>
+    );
+};
+
+export default Home;
