@@ -5,13 +5,7 @@ import { Search as SearchIcon } from '@material-ui/icons/';
 import { InputBase } from '@material-ui/core/';
 
 function Home(){   
-    const classes = useStyles();    
-    const Home = () => {
     const classes = useStyles();
-        return (
-            <img className={classes.slideImages} src={slide1}/>
-        )
-    }
     const CategoriesList = () => {
         const categories = ['Type1', 'Type2', 'Type3', 'Type4'];
         const listItems = categories.map((category) =>
@@ -28,8 +22,8 @@ function Home(){
     }
 
     return  (
-        <div>
-            <Home/>
+        <div className={classes.greetingUnit}>
+            <img className={classes.slideImages} src={slide1} alt=""/>
             <div className={classes.search}>
                 <div className={classes.searchIcon}>
                     <SearchIcon />

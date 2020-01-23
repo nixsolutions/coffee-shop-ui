@@ -1,42 +1,26 @@
 import { fade, makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
+  greetingUnit: {
+    display: 'block',
+    textAlign: 'center',
+    width: 'inherit',
+  },
   slideImages: {
-    width: '80%',
     height: '300px',
     opacity: '0.75',
-    display: 'block',
-    margin: 'auto',
-  },
-  catList: {
-    display: 'flex',
-    margin: 'auto',
-    listStyleType: 'none',
-    justifyContent: 'space-around',
-  },
-  catName: {
-    color: 'black',
-    fontSize: '1.5rem',
-    height: '9rem',
-    width: '15.5rem',
-    backgroundSize: 'cover',
-    borderRadius: '0.8125rem',
-    backgroundRepeat:' no-repeat',
   },
   search: {
+    width: '50%',
     color: '#4F3429',
+    textAlign: 'left',
+    margin: '16px auto',
     position: 'relative',
     borderRadius: '16px',
     backgroundColor: fade('#4F3429', 0.15),
     '&:hover': {
       backgroundColor: fade('#4F3429', 0.25)
     },
-    margin: 'auto',
-    width: '50%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-      width: 'auto'
-    }
   },
   searchIcon: {
     width: theme.spacing(7),
@@ -48,7 +32,6 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center'
   },
   inputRoot: {
-    color: '#4F3429',
     color: 'inherit'
   },
   inputInput: {
@@ -58,7 +41,21 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('md')]: {
       width: 200
     }
-  }
+  },
+  catList: {
+    display: 'flex',
+    margin: 'auto',
+    listStyleType: 'none',
+    justifyContent: 'space-around',
+  },
+  catName: {
+    border: 'none',
+    color: '#7E5040',
+    fontSize: '1.5rem',
+    backgroundSize: 'cover',
+    borderRadius: '0.8125rem',
+    backgroundRepeat: 'no-repeat',
+  },
 }));
   
 export default useStyles;
