@@ -10,6 +10,7 @@ import Box from '@material-ui/core/Box';
 import Header from '../Header';
 import Shop from '../Shop';
 import Product from '../Product';
+import Home from '../Home';
 import ErrorBoundary from '../ErrorBoundary';
 import CustomerSignUp from '../CustomerSignUp';
 import CustomerLogIn from '../CustomerLogIn';
@@ -22,7 +23,7 @@ function App() {
           <Header />
           <Box mt={12}>
             <Switch>
-              <Route exact path="/" render={() => <h1>Coffe Shop</h1>} />
+              <Route exact path="/" component={Home} />
               <Route exact path="/shop" component={Shop} />
               <Route exact path="/shop/:slug" component={Product} />
               <Route

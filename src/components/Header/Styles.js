@@ -2,7 +2,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   header: {
-    backgroundColor: '#241D1D',
+    backgroundColor: '#C0FFF6',
     height: '90px',
     padding: '10px'
   },
@@ -10,6 +10,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   },
   menuButton: {
+    color: '#4F3429',
     marginRight: theme.spacing(2)
   },
   title: {
@@ -21,6 +22,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   search: {
+    color: '#4F3429',
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
@@ -66,6 +68,9 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('md')]: {
       display: 'none'
     }
+  },
+  iconHeader: {
+    color: '#4F3429'
   }
 }));
 
