@@ -2,21 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
-import { 
-  AppBar, 
-  Toolbar, 
-  IconButton, 
-  Typography, 
-  InputBase, 
-  Badge 
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  InputBase,
+  Badge
 } from '@material-ui/core/';
-import { 
-  Menu as MenuIcon, 
-  Search as SearchIcon, 
-  AccountCircle, 
-  Mail as MailIcon, 
-  ShoppingCart, 
-  MoreVert as MoreIcon 
+import {
+  Menu as MenuIcon,
+  Search as SearchIcon,
+  AccountCircle,
+  Mail as MailIcon,
+  ShoppingCart,
+  MoreVert as MoreIcon
 } from '@material-ui/icons/';
 import useStyles from './Styles';
 import SideBar from '../SideBar';
@@ -54,7 +54,6 @@ function Header() {
   };
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const menuId = 'primary-search-account-menu';
-  const logo = Logo;
 
   return (
     <div className={classes.grow}>
@@ -76,7 +75,7 @@ function Header() {
             component={Link}
             to="/"
           >
-            <img src={logo} />
+            <img src={Logo} alt="" />
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -95,7 +94,7 @@ function Header() {
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
-                <MailIcon className={classes.iconHeader}/>
+                <MailIcon className={classes.iconHeader} />
               </Badge>
             </IconButton>
             <IconButton color="inherit">
@@ -104,7 +103,7 @@ function Header() {
                 color="secondary"
                 onClick={() => client.writeData({ data: { isOpenCart: true } })}
               >
-                <ShoppingCart className={classes.iconHeader}/>
+                <ShoppingCart className={classes.iconHeader} />
               </Badge>
             </IconButton>
             <IconButton
@@ -115,7 +114,7 @@ function Header() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <AccountCircle className={classes.iconHeader}/>
+              <AccountCircle className={classes.iconHeader} />
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
@@ -126,7 +125,7 @@ function Header() {
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
-              <MoreIcon className={classes.iconHeader}/>
+              <MoreIcon className={classes.iconHeader} />
             </IconButton>
           </div>
         </Toolbar>

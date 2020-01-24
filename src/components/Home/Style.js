@@ -4,11 +4,11 @@ const useStyles = makeStyles(theme => ({
   greetingUnit: {
     display: 'block',
     textAlign: 'center',
-    width: 'inherit',
+    width: 'inherit'
   },
   slideImages: {
     height: '300px',
-    opacity: '0.75',
+    opacity: '0.75'
   },
   search: {
     width: '50%',
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: fade('#4F3429', 0.15),
     '&:hover': {
       backgroundColor: fade('#4F3429', 0.25)
-    },
+    }
   },
   searchIcon: {
     width: theme.spacing(7),
@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     margin: 'auto',
     listStyleType: 'none',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
   },
   catName: {
     border: 'none',
@@ -54,8 +54,8 @@ const useStyles = makeStyles(theme => ({
     fontSize: '1.5rem',
     backgroundSize: 'cover',
     borderRadius: '0.8125rem',
-    backgroundRepeat: 'no-repeat',
-  },
+    backgroundRepeat: 'no-repeat'
+  }
 }));
-  
+
 export default useStyles;

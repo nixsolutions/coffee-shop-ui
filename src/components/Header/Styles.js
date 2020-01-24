@@ -47,7 +47,6 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center'
   },
   inputRoot: {
-    color: '#4F3429',
     color: 'inherit'
   },
   inputInput: {
@@ -69,9 +68,9 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('md')]: {
       display: 'none'
     }
-  }, 
+  },
   iconHeader: {
-    color: '#4F3429',
+    color: '#4F3429'
   }
 }));
 
