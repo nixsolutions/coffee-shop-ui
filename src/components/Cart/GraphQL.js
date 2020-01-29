@@ -17,6 +17,8 @@ const GET_CHECKOUT_ITEMS = gql`
     node(id: $id) {
       ... on Checkout {
         id
+        webUrl
+        email
         totalPriceV2 {
           amount
         }
@@ -25,6 +27,18 @@ const GET_CHECKOUT_ITEMS = gql`
         }
         subtotalPriceV2 {
           amount
+        }
+        shippingAddress {
+          firstName
+          lastName
+          address1
+          province
+          country
+          zip
+        }
+        shippingLine {
+          title
+          handle
         }
         lineItems(first: 10) {
           edges {

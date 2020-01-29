@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 const GET_PRODUCTS = gql`
   query GET_PRODUCTS {
-    products(first: 5) {
+    products(first: 100) {
       edges {
         node {
           id

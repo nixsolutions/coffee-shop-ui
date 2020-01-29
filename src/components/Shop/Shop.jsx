@@ -1,4 +1,5 @@
 import React from 'react';
+import sumBy from 'lodash/sumBy';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import store from 'store';
 import { Link } from 'react-router-dom';
@@ -43,6 +44,10 @@ export default function Shop() {
         store.set('cartItems', cartItems);
         client.writeData({
           data: {
+            bucketItemsCount: sumBy(
+              store.get('cartItems'),
+              node => node.quantity
+            ),
             checkoutId: data.checkoutCreate.checkout.id
           }
         });
@@ -91,6 +96,7 @@ export default function Shop() {
   };
 
   if (loading) return <Spinner />;
+
   return (
     <Grid
       container
@@ -136,14 +142,18 @@ export default function Shop() {
               </CardContent>
             </CardActionArea>
             <CardActions>
-              <Button
-                fullWidth
-                disabled={checkoutCreateLoad || checkoutReplaceLoad}
-                color="secondary"
-                onClick={() => addToCart(node.variants.edges[0].node.id, 1)}
-              >
-                Add To Cart
-              </Button>
+              {node.availableForSale ? (
+                <Button
+                  fullWidth
+                  disabled={checkoutCreateLoad || checkoutReplaceLoad}
+                  color="secondary"
+                  onClick={() => addToCart(node.variants.edges[0].node.id, 1)}
+                >
+                  Add To Cart
+                </Button>
+              ) : (
+                <Button fullWidth disabled>Sold out</Button>
+              )}
               <Button
                 fullWidth
                 color="primary"

@@ -31,6 +31,10 @@ export default function SideBar() {
       onKeyDown={toggleDrawer(client, false)}
     >
       <List>
+        <ListItem button component={Link} to="/">
+          <LocalCafe />
+          <ListItemText primary="Home" />
+        </ListItem>
         <ListItem button component={Link} to="/shop">
           <LocalCafe />
           <ListItemText primary="Shop" />

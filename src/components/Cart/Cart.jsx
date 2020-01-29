@@ -10,6 +10,7 @@ import { CART_OPEN_QUERY, GET_CHECKOUT_ITEMS } from './GraphQL';
 import useStyles from './Styles';
 import Spinner from '../Spinner';
 import LineItem from '../LineItem';
+import SplitButtonCheckout from '../SplitButtonCheckout';
 import { CHECKOUT_LINE_ITEMS_REPLACE, GET_CHECKOUT_ID } from '../Shop/GraphQl';
 
 export default function Cart() {
@@ -20,7 +21,6 @@ export default function Cart() {
   const { data, loading } = useQuery(GET_CHECKOUT_ITEMS, {
     variables: { id: cartId }
   });
-
   const [
     checkoutLineItemsReplace,
     { loading: checkoutReplaceLoad }
@@ -76,9 +76,17 @@ export default function Cart() {
         </List>
         <Divider />
         {data && data.node.lineItems.edges.length > 0 ? (
-          <Button fullWidth color="secondary" onClick={() => removeAllItem()}>
-            Clear cart
-          </Button>
+          <>
+            <Button
+              variant="contained"
+              fullWidth
+              color="secondary"
+              onClick={() => removeAllItem()}
+            >
+              Clear cart
+            </Button>
+            <SplitButtonCheckout />
+          </>
         ) : (
           <Typography align="center" variant="h4">
             Cart is empty
