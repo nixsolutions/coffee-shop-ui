@@ -1,0 +1,20 @@
+name: React CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x]
+
+    steps:
+    - name: ESLint Action
+      uses: hallee/eslint-action@1.0.1
+    - name: Prettier Action
+      uses: creyD/prettier_action@v2.0
+    env:
+        CI: true
