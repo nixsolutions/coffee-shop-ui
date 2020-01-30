@@ -97,12 +97,11 @@ function Header() {
                 <MailIcon className={classes.iconHeader} />
               </Badge>
             </IconButton>
-            <IconButton color="inherit">
-              <Badge
-                badgeContent={data.bucketItemsCount}
-                color="secondary"
-                onClick={() => client.writeData({ data: { isOpenCart: true } })}
-              >
+            <IconButton
+              color="inherit"
+              onClick={() => client.writeData({ data: { isOpenCart: true } })}
+            >
+              <Badge badgeContent={data.bucketItemsCount} color="secondary">
                 <ShoppingCart className={classes.iconHeader} />
               </Badge>
             </IconButton>

@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import filter from 'lodash/filter';
-import store from 'store';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -18,6 +16,10 @@ import useStyles from './Styles';
 import { GET_CHECKOUT_ID, CHECKOUT_LINE_ITEMS_REPLACE } from '../Shop/GraphQl';
 import Spinner from '../Spinner';
 import checkoutResolver from '../../helpers/checkoutResolver';
+import {
+  updateQuantityProduct,
+  removeFromCart
+} from '../../helpers/productsCheckoutService';
 import noPhotoAvailable from '../../media/noPhotoAvailable.png';
 
 export default function LineItem({ product, cartItemsQuery }) {
@@ -40,36 +42,6 @@ export default function LineItem({ product, cartItemsQuery }) {
       checkoutResolver(data, client);
     }
   });
-
-  const removeFromCart = id => {
-    const existingItemsCart = store.get('cartItems') || [];
-    const firteredItems = filter(existingItemsCart, item => {
-      return item.variantId !== id;
-    });
-    checkoutLineItemsReplace({
-      variables: {
-        checkoutId,
-        lineItems: firteredItems
-      }
-    });
-    store.set('cartItems', firteredItems);
-  };
-
-  const updateQuantityProduct = (id, e) => {
-    e.preventDefault();
-    const existingItemsCart = store.get('cartItems') || [];
-    const existingItem = existingItemsCart.find(item => item.variantId === id);
-    if (existingItem) {
-      existingItem.quantity = parseInt(e.target.value, 10);
-    }
-    checkoutLineItemsReplace({
-      variables: {
-        checkoutId,
-        lineItems: existingItemsCart
-      }
-    });
-    store.set('cartItems', existingItemsCart);
-  };
 
   if (checkoutReplaceLoad) return <Spinner />;
   return (
@@ -100,7 +72,12 @@ export default function LineItem({ product, cartItemsQuery }) {
                   inputProps={{ min: '1' }}
                   defaultValue={product.quantity}
                   className={classes.quantityProduct}
-                  onChange={e => updateQuantityProduct(product.variant.id, e)}
+                  onChange={e =>
+                    updateQuantityProduct(
+                      product.variant.id,
+                      e,
+                      checkoutLineItemsReplace
+                    )}
                 />
               </InputLabel>
             </Grid>
@@ -108,7 +85,7 @@ export default function LineItem({ product, cartItemsQuery }) {
               <IconButton
                 edge="end"
                 aria-label="comments"
-                onClick={() => removeFromCart(product.variant.id)}
+                onClick={() => removeFromCart(product.variant.id, checkoutLineItemsReplace)}
               >
                 <DeleteIcon />
               </IconButton>
