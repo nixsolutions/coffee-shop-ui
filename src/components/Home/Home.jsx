@@ -1,22 +1,16 @@
 import React from 'react';
+import { useQuery } from '@apollo/react-hooks';
 import { Search as SearchIcon } from '@material-ui/icons/';
-import { InputBase } from '@material-ui/core/';
-import useStyles from './Style';
+import { InputBase, Grid, Typography } from '@material-ui/core/';
+import useStyles from './Styles';
+import GET_PRODUCTS_HOME from './GraphQl';
+import Spinner from '../Spinner';
 import slide1 from '../../media/slide1.jpg';
+import ProductRecomendation from './ProductRecomendation';
 
 function Home() {
+  const { data, loading } = useQuery(GET_PRODUCTS_HOME);
   const classes = useStyles();
-  const CategoriesList = () => {
-    const categories = ['Type1', 'Type2', 'Type3', 'Type4'];
-    const listItems = categories.map(category => (
-      <li key={category}>
-        <button className={classes.catName} type="button">
-          {category}
-        </button>
-      </li>
-    ));
-    return <ul className={classes.catList}>{listItems}</ul>;
-  };
 
   return (
     <div className={classes.greetingUnit}>
@@ -34,7 +28,23 @@ function Home() {
           inputProps={{ 'aria-label': 'search' }}
         />
       </div>
-      <CategoriesList />
+      {loading ? (
+        <Spinner />
+      ) : (
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Typography align="center" variant="h4">
+              Recommendations
+            </Typography>
+          </Grid>
+          {data.products &&
+            data.products.edges.map(({ node }) => (
+              <Grid item sm={6} xs={12} md={3} key={node.id}>
+                <ProductRecomendation product={node} key={node.id} />
+              </Grid>
+            ))}
+        </Grid>
+      )}
     </div>
   );
 }

@@ -42,19 +42,18 @@ const useStyles = makeStyles(theme => ({
       width: 200
     }
   },
-  catList: {
-    display: 'flex',
-    margin: 'auto',
-    listStyleType: 'none',
-    justifyContent: 'space-around'
-  },
-  catName: {
+  cardName: {
     border: 'none',
     color: '#7E5040',
-    fontSize: '1.5rem',
     backgroundSize: 'cover',
     borderRadius: '0.8125rem',
     backgroundRepeat: 'no-repeat'
+  },
+  card: {
+    maxWidth: 345
+  },
+  media: {
+    height: 140
   }
 }));
 
