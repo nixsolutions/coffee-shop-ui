@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import {
   Paper,
@@ -13,7 +14,7 @@ import { GET_CHECKOUT_SHIPPING_RATE, UPDATE_SHIPPING_LINE } from './GraphQl';
 import { GET_CHECKOUT_ITEMS } from '../Cart/GraphQL';
 import useStyles from './Styles';
 
-export default function ShippingLineForm() {
+export default function ShippingLineForm({ nextStep }) {
   const classes = useStyles();
   const checkoutId = store.get('checkoutId');
   const [shipping, setShipping] = useState('');
@@ -35,7 +36,10 @@ export default function ShippingLineForm() {
         query: GET_CHECKOUT_ITEMS,
         variables: { id: checkoutId }
       }
-    ]
+    ],
+    onCompleted: () => {
+      nextStep();
+    }
   });
 
   const updateShippingLine = () => {
@@ -74,3 +78,7 @@ export default function ShippingLineForm() {
     </Paper>
   );
 }
+
+ShippingLineForm.propTypes = {
+  nextStep: PropTypes.func.isRequired
+};
