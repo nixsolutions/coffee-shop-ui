@@ -152,7 +152,9 @@ export default function Shop() {
                   Add To Cart
                 </Button>
               ) : (
-                <Button fullWidth disabled>Sold out</Button>
+                <Button fullWidth disabled>
+                  Sold out
+                </Button>
               )}
               <Button
                 fullWidth

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Paper, TextField, Button, Typography } from '@material-ui/core';
 import { useMutation } from '@apollo/react-hooks';
 import store from 'store';
@@ -6,9 +7,10 @@ import Spinner from '../Spinner';
 import UPDATE_CHECKOUT_EMAIL from './GraphQl';
 import { GET_CHECKOUT_ITEMS } from '../Cart/GraphQL';
 
-export default function CheckoutEmailForm() {
+export default function CheckoutEmailForm({ nextStep, checkoutData }) {
   const id = store.get('checkoutId');
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(checkoutData.node.email || '');
+  const [formErrors, setFormErrors] = useState([]);
   const [checkoutEmailUpdateV2, { loading }] = useMutation(
     UPDATE_CHECKOUT_EMAIL,
     {
@@ -17,7 +19,14 @@ export default function CheckoutEmailForm() {
           query: GET_CHECKOUT_ITEMS,
           variables: { id }
         }
-      ]
+      ],
+      onCompleted: data => {
+        if (data.checkoutEmailUpdateV2.checkoutUserErrors.length > 0) {
+          setFormErrors(data.checkoutEmailUpdateV2.checkoutUserErrors);
+        } else {
+          nextStep();
+        }
+      }
     }
   );
   const updateEmail = () => {
@@ -42,8 +51,14 @@ export default function CheckoutEmailForm() {
         <Typography align="center" variant="h5">
           Contact information
         </Typography>
+        {formErrors.map(err => (
+          <Typography color="error" key={err.message}>
+            {`*${err.message}`}
+          </Typography>
+        ))}
         <TextField
           required
+          defaultValue={email}
           id="email"
           name="email"
           label="Email"
@@ -58,3 +73,8 @@ export default function CheckoutEmailForm() {
     </Paper>
   );
 }
+
+CheckoutEmailForm.propTypes = {
+  checkoutData: PropTypes.objectOf(Object).isRequired,
+  nextStep: PropTypes.func.isRequired
+};

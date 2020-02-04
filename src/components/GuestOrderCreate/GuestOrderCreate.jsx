@@ -4,14 +4,12 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Grid, Paper, Typography, Button, Divider } from '@material-ui/core';
-import ShippingForm from '../ShippingForm';
 import { GET_CHECKOUT_ITEMS } from '../Cart/GraphQL';
 import Spinner from '../Spinner';
 import useStyles from './Styles';
 import ItemsCheckout from '../ItemsCheckout';
-import CheckoutEmailForm from '../CheckoutEmailForm/CheckoutEmailForm';
-import ShippingLineForm from '../ShippingLineForm';
 import CHECKOUT_COMPLETE_FREE from './GraphQl';
+import StepperCompletedCheckout from '../StepperCompletedCheckout';
 
 function GuestOrderCreate({ history }) {
   const [errors, setErrors] = useState([]);
@@ -63,18 +61,7 @@ function GuestOrderCreate({ history }) {
     <Grid container spacing={2}>
       <Grid item xs={12} sm={6}>
         <ItemsCheckout data={data} />
-        {data.node.email === null ? <CheckoutEmailForm /> : null}
-        {data.node.shippingAddress === null ? (
-          <Paper>
-            <ShippingForm />
-          </Paper>
-        ) : null}
-        {data.node.shippingAddress !== null &&
-        data.node.shippingLine === null ? (
-          <Paper>
-            <ShippingLineForm />
-          </Paper>
-        ) : null}
+        <StepperCompletedCheckout data={data} />
       </Grid>
       <Grid item xs={12} sm={6}>
         <Paper className={classes.orderInfo}>

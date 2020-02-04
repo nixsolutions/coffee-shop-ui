@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const GET_ORDER = gql`
-  query GET_ORDER_ID($id: ID!) {
+  query getOrderInfo($id: ID!) {
     node(id: $id) {
       ... on Checkout {
         id

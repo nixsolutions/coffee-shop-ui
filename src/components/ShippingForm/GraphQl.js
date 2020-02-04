@@ -9,7 +9,7 @@ const CHECKOUT_SHIPPPING_ADRESS_UPDATE = gql`
       shippingAddress: $shippingAddress
       checkoutId: $checkoutId
     ) {
-      userErrors {
+      checkoutUserErrors {
         field
         message
       }

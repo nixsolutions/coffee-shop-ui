@@ -19,6 +19,7 @@ const GET_CHECKOUT_ITEMS = gql`
         id
         webUrl
         email
+        ready
         totalPriceV2 {
           amount
         }
@@ -29,6 +30,8 @@ const GET_CHECKOUT_ITEMS = gql`
           amount
         }
         shippingAddress {
+          city
+          phone
           firstName
           lastName
           address1
