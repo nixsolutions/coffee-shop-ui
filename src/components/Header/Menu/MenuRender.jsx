@@ -39,7 +39,13 @@ function MenuRender({ anchorEl, isMenuOpen, handleMenuClose, history }) {
         </div>
       ) : (
         <div>
-          <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+          <MenuItem
+            onClick={handleMenuClose}
+            component={Link}
+            to="/customer/profile"
+          >
+            Profile
+          </MenuItem>
           <MenuItem onClick={customerLogOut}>LogOut</MenuItem>
         </div>
       )}

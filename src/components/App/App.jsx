@@ -17,6 +17,7 @@ import CustomerLogIn from '../CustomerLogIn';
 import CustomerOrderCreate from '../CustomerOrderCreate';
 import GuestOrderCreate from '../GuestOrderCreate';
 import GuestOrder from '../GuestOrder';
+import CustomerProfile from '../CustomerProfile';
 
 function App() {
   return (
@@ -45,6 +46,11 @@ function App() {
                 component={CustomerSignUp}
               />
               <Route exact path="/customer/sign_in" component={CustomerLogIn} />
+              <Route
+                exact
+                path="/customer/profile"
+                component={CustomerProfile}
+              />
               <Route exact path="/order/:id" component={GuestOrder} />
               <Redirect to="/" />
             </Switch>
