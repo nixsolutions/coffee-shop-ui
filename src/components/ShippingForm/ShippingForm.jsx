@@ -65,12 +65,8 @@ export default function ShippingForm({ nextStep, checkoutData }) {
     CHECKOUT_SHIPPPING_ADRESS_UPDATE,
     {
       onCompleted: data => {
-        if (
-          data.checkoutShippingAddressUpdateV2.checkoutUserErrors.length > 0
-        ) {
-          setFormErrors(
-            data.checkoutShippingAddressUpdateV2.checkoutUserErrors
-          );
+        if (data.checkoutShippingAddressUpdateV2.checkoutUserErrors.length > 0) {
+          setFormErrors(data.checkoutShippingAddressUpdateV2.checkoutUserErrors);
         } else {
           nextStep();
         }
@@ -92,16 +88,7 @@ export default function ShippingForm({ nextStep, checkoutData }) {
   };
 
   const updateShippingCheckout = () => {
-    const {
-      address1,
-      city,
-      country,
-      firstName,
-      lastName,
-      phone,
-      province,
-      zip
-    } = addressData;
+    const { address1, city, country, firstName, lastName, phone, province, zip } = addressData;
     checkoutShippingAddressUpdateV2({
       variables: {
         checkoutId,

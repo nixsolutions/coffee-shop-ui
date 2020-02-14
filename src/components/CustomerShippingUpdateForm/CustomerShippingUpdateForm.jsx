@@ -16,39 +16,28 @@ import Spinner from '../Spinner';
 import GET_CUSTOMER from '../CustomerProfile/GraphQl';
 import CUSTOMER_ADDRESS_UPDATE from './GraphQl';
 
-export default function CustomerShippingUpdateForm({
-  currentAddresses,
-  token
-}) {
-  const [currentAddress, setCurrentAddress] = useState(
-    currentAddresses.edges[0].node
-  );
+export default function CustomerShippingUpdateForm({ currentAddresses, token }) {
+  const [currentAddress, setCurrentAddress] = useState(currentAddresses.edges[0].node);
   const [formErrors, setFormErrors] = useState([]);
 
-  const [customerAddressUpdate, { loading }] = useMutation(
-    CUSTOMER_ADDRESS_UPDATE,
-    {
-      onCompleted: data => {
-        if (data.customerAddressUpdate.customerUserErrors.length > 0) {
-          setFormErrors(data.customerAddressUpdate.customerUserErrors);
-        }
-      },
-      refetchQueries: [
-        {
-          query: GET_CUSTOMER,
-          variables: { customerAccessToken: token }
-        }
-      ]
-    }
-  );
+  const [customerAddressUpdate, { loading }] = useMutation(CUSTOMER_ADDRESS_UPDATE, {
+    onCompleted: data => {
+      if (data.customerAddressUpdate.customerUserErrors.length > 0) {
+        setFormErrors(data.customerAddressUpdate.customerUserErrors);
+      }
+    },
+    refetchQueries: [
+      {
+        query: GET_CUSTOMER,
+        variables: { customerAccessToken: token }
+      }
+    ]
+  });
 
   const handleChange = event => {
     event.preventDefault();
     const { value } = event.target;
-    const formAddress = find(
-      currentAddresses.edges,
-      ({ node }) => node.id === value
-    ).node;
+    const formAddress = find(currentAddresses.edges, ({ node }) => node.id === value).node;
 
     setCurrentAddress({ ...currentAddress, ...formAddress });
   };
@@ -189,9 +178,7 @@ export default function CustomerShippingUpdateForm({
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl variant="filled" fullWidth>
-            <InputLabel htmlFor="updateProvince">
-              State/Province/Region
-            </InputLabel>
+            <InputLabel htmlFor="updateProvince">State/Province/Region</InputLabel>
             <FilledInput
               id="updateProvince"
               name="province"

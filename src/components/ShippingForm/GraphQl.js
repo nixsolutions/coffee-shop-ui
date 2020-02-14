@@ -5,10 +5,7 @@ const CHECKOUT_SHIPPPING_ADRESS_UPDATE = gql`
     $shippingAddress: MailingAddressInput!
     $checkoutId: ID!
   ) {
-    checkoutShippingAddressUpdateV2(
-      shippingAddress: $shippingAddress
-      checkoutId: $checkoutId
-    ) {
+    checkoutShippingAddressUpdateV2(shippingAddress: $shippingAddress, checkoutId: $checkoutId) {
       checkoutUserErrors {
         field
         message

@@ -13,11 +13,7 @@ import useStyles from './Styles';
 export default function SideBar() {
   const classes = useStyles();
   const toggleDrawer = (client, open) => event => {
-    if (
-      event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
+    if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
     client.writeData({ data: { isOpenSideBar: open } });

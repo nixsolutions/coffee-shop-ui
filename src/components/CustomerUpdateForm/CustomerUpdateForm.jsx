@@ -9,9 +9,7 @@ import setCustomerToken from '../../helpers/setCustomerToken';
 export default function CustomerUpdateForm({ customer, token }) {
   const [formErrors, setFormErrors] = useState([]);
   const [customerUpdate, { loading, client }] = useMutation(CUSTOMER_UPDATE, {
-    onCompleted: ({
-      customerUpdate: { customerAccessToken, customerUserErrors }
-    }) => {
+    onCompleted: ({ customerUpdate: { customerAccessToken, customerUserErrors } }) => {
       if (customerUserErrors.length > 0) {
         setFormErrors(customerUserErrors);
       } else {

@@ -27,21 +27,19 @@ function CustomerSignUp({ history }) {
   const [acceptsMarketing, setAcceptsMarketing] = useState(false);
   const [formErrors, setFormErrors] = useState([]);
 
-  const [
-    customerAccessTokenCreate,
-    { loading: loadCreateToken, client }
-  ] = useMutation(CUSTOMER_ACCESS_TOKEN_CREATE, {
-    onCompleted: ({
-      customerAccessTokenCreate: { customerAccessToken, customerUserErrors }
-    }) => {
-      if (customerUserErrors.length > 0) {
-        setFormErrors(customerUserErrors);
-      } else {
-        setCustomerToken(client, customerAccessToken);
-        history.push('/');
+  const [customerAccessTokenCreate, { loading: loadCreateToken, client }] = useMutation(
+    CUSTOMER_ACCESS_TOKEN_CREATE,
+    {
+      onCompleted: ({ customerAccessTokenCreate: { customerAccessToken, customerUserErrors } }) => {
+        if (customerUserErrors.length > 0) {
+          setFormErrors(customerUserErrors);
+        } else {
+          setCustomerToken(client, customerAccessToken);
+          history.push('/');
+        }
       }
     }
-  });
+  );
   const [createCustomer, { loading }] = useMutation(CUSTOMER_CREATE, {
     onCompleted: ({ customerCreate: { customer, customerUserErrors } }) => {
       if (customerUserErrors.length > 0) {
@@ -159,10 +157,7 @@ function CustomerSignUp({ history }) {
             <Grid item xs={12}>
               <FormControlLabel
                 control={
-                  <Checkbox
-                    color="primary"
-                    onChange={e => setAcceptsMarketing(e.target.checked)}
-                  />
+                  <Checkbox color="primary" onChange={e => setAcceptsMarketing(e.target.checked)} />
                 }
                 label="I want to receive inspiration, marketing promotions and updates via email."
               />

@@ -30,44 +30,36 @@ export default function Shop() {
   } = useQuery(GET_CHECKOUT_ID);
   const { loading, data: { products } = {} } = useQuery(GET_PRODUCTS);
 
-  const [checkoutCreate, { loading: checkoutCreateLoad, client }] = useMutation(
-    CREATE_CHECKOUT,
+  const [checkoutCreate, { loading: checkoutCreateLoad, client }] = useMutation(CREATE_CHECKOUT, {
+    onCompleted: data => {
+      const cartItems = data.checkoutCreate.checkout.lineItems.edges.map(({ node }) => ({
+        variantId: node.variant.id,
+        quantity: node.quantity
+      }));
+      store.set('checkoutId', data.checkoutCreate.checkout.id);
+      store.set('cartItems', cartItems);
+      client.writeData({
+        data: {
+          bucketItemsCount: sumBy(store.get('cartItems'), node => node.quantity),
+          checkoutId: data.checkoutCreate.checkout.id
+        }
+      });
+    }
+  });
+  const [checkoutLineItemsReplace, { loading: checkoutReplaceLoad }] = useMutation(
+    CHECKOUT_LINE_ITEMS_REPLACE,
     {
+      refetchQueries: [
+        {
+          query: GET_CHECKOUT_ITEMS,
+          variables: { id: store.get('checkoutId') }
+        }
+      ],
       onCompleted: data => {
-        const cartItems = data.checkoutCreate.checkout.lineItems.edges.map(
-          ({ node }) => ({
-            variantId: node.variant.id,
-            quantity: node.quantity
-          })
-        );
-        store.set('checkoutId', data.checkoutCreate.checkout.id);
-        store.set('cartItems', cartItems);
-        client.writeData({
-          data: {
-            bucketItemsCount: sumBy(
-              store.get('cartItems'),
-              node => node.quantity
-            ),
-            checkoutId: data.checkoutCreate.checkout.id
-          }
-        });
+        checkoutResolver(data, client);
       }
     }
   );
-  const [
-    checkoutLineItemsReplace,
-    { loading: checkoutReplaceLoad }
-  ] = useMutation(CHECKOUT_LINE_ITEMS_REPLACE, {
-    refetchQueries: [
-      {
-        query: GET_CHECKOUT_ITEMS,
-        variables: { id: store.get('checkoutId') }
-      }
-    ],
-    onCompleted: data => {
-      checkoutResolver(data, client);
-    }
-  });
 
   const addToCart = (id, count) => {
     const existingItemsCart = store.get('cartItems') || [];
@@ -98,22 +90,9 @@ export default function Shop() {
   if (loading) return <Spinner />;
 
   return (
-    <Grid
-      container
-      className={classes.root}
-      spacing={2}
-      justify="center"
-      direction="row"
-    >
+    <Grid container className={classes.root} spacing={2} justify="center" direction="row">
       {products.edges.map(({ node }) => (
-        <Grid
-          item
-          xs={12}
-          lg={3}
-          md={6}
-          className={classes.cardContainer}
-          key={node.id}
-        >
+        <Grid item xs={12} lg={3} md={6} className={classes.cardContainer} key={node.id}>
           <Card className={classes.card}>
             <CardActionArea component={Link} to={`/shop/${node.id}`}>
               <CardMedia
@@ -121,9 +100,7 @@ export default function Shop() {
                 alt="Contemplative Reptile"
                 height="250"
                 image={
-                  node.images.edges.length !== 0
-                    ? node.images.edges[0].node.src
-                    : noPhotoAvailable
+                  node.images.edges.length !== 0 ? node.images.edges[0].node.src : noPhotoAvailable
                 }
                 title={node.title}
               />
@@ -131,12 +108,7 @@ export default function Shop() {
                 <Typography gutterBottom variant="h5" component="h2">
                   {node.title}
                 </Typography>
-                <Typography
-                  noWrap
-                  variant="body2"
-                  color="textSecondary"
-                  component="p"
-                >
+                <Typography noWrap variant="body2" color="textSecondary" component="p">
                   {node.description}
                 </Typography>
               </CardContent>
@@ -156,12 +128,7 @@ export default function Shop() {
                   Sold out
                 </Button>
               )}
-              <Button
-                fullWidth
-                color="primary"
-                component={Link}
-                to={`/shop/${node.id}`}
-              >
+              <Button fullWidth color="primary" component={Link} to={`/shop/${node.id}`}>
                 More info
               </Button>
             </CardActions>

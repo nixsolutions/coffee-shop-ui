@@ -2,14 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  InputBase,
-  Badge
-} from '@material-ui/core/';
+import { AppBar, Toolbar, IconButton, Typography, InputBase, Badge } from '@material-ui/core/';
 import {
   Menu as MenuIcon,
   Search as SearchIcon,
@@ -68,13 +61,7 @@ function Header() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            className={classes.title}
-            variant="h6"
-            noWrap
-            component={Link}
-            to="/"
-          >
+          <Typography className={classes.title} variant="h6" noWrap component={Link} to="/">
             <img src={Logo} alt="" />
           </Typography>
           <div className={classes.search}>
@@ -139,11 +126,7 @@ function Header() {
         bucketItemsCount={data.bucketItemsCount}
         handleProfileMenuOpen={handleProfileMenuOpen}
       />
-      <MenuRender
-        anchorEl={anchorEl}
-        isMenuOpen={isMenuOpen}
-        handleMenuClose={handleMenuClose}
-      />
+      <MenuRender anchorEl={anchorEl} isMenuOpen={isMenuOpen} handleMenuClose={handleMenuClose} />
     </div>
   );
 }

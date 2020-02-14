@@ -39,9 +39,7 @@ export default function Product({ match: { params } }) {
         />
         {node.descriptionHtml ? (
           <Paper className={classes.description}>
-            <Typography variant="body2">
-              {parse(node.descriptionHtml)}
-            </Typography>
+            <Typography variant="body2">{parse(node.descriptionHtml)}</Typography>
           </Paper>
         ) : null}
       </Grid>
@@ -50,11 +48,7 @@ export default function Product({ match: { params } }) {
       </Grid>
       <Grid item xs={12}>
         <LocationProductMap
-          position={
-            node.metafields.edges.length > 0
-              ? node.metafields.edges[0].node.value
-              : null
-          }
+          position={node.metafields.edges.length > 0 ? node.metafields.edges[0].node.value : null}
         />
       </Grid>
     </Grid>

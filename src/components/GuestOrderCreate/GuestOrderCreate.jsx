@@ -25,9 +25,7 @@ function GuestOrderCreate({ history }) {
   const [checkoutCompleteFree, { loading: loadCheckoutComplete }] = useMutation(
     CHECKOUT_COMPLETE_FREE,
     {
-      onCompleted: ({
-        checkoutCompleteFree: { checkoutUserErrors, checkout }
-      }) => {
+      onCompleted: ({ checkoutCompleteFree: { checkoutUserErrors, checkout } }) => {
         const hasError = checkoutUserErrors.length > 0;
         if (hasError) {
           setErrors(checkoutUserErrors);

@@ -26,9 +26,7 @@ function CustomerLogIn({ history }) {
   const [customerAccessTokenCreate, { loading, client }] = useMutation(
     CUSTOMER_ACCESS_TOKEN_CREATE,
     {
-      onCompleted: ({
-        customerAccessTokenCreate: { customerAccessToken, customerUserErrors }
-      }) => {
+      onCompleted: ({ customerAccessTokenCreate: { customerAccessToken, customerUserErrors } }) => {
         if (customerUserErrors.length > 0) {
           setFormErrors(customerUserErrors);
         } else {

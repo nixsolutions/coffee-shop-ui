@@ -70,12 +70,7 @@ export default function CustomerProfile() {
           </Typography>
           <div className={classes.root}>
             <AppBar position="static">
-              <Tabs
-                value={value}
-                centered
-                onChange={handleChange}
-                aria-label="shipping tabs"
-              >
+              <Tabs value={value} centered onChange={handleChange} aria-label="shipping tabs">
                 <Tab label="Create sipping address" {...a11yProps(0)} />
                 <Tab
                   label="Update sipping address"
@@ -88,10 +83,7 @@ export default function CustomerProfile() {
               <CustomerShippingCreateForm />
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <CustomerShippingUpdateForm
-                currentAddresses={customer.addresses}
-                token={token}
-              />
+              <CustomerShippingUpdateForm currentAddresses={customer.addresses} token={token} />
             </TabPanel>
           </div>
         </Grid>

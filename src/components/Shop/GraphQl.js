@@ -62,10 +62,7 @@ const GET_CHECKOUT_ID = gql`
 `;
 
 const CHECKOUT_LINE_ITEMS_REPLACE = gql`
-  mutation checkoutLineItemsReplace(
-    $checkoutId: ID!
-    $lineItems: [CheckoutLineItemInput!]!
-  ) {
+  mutation checkoutLineItemsReplace($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
     checkoutLineItemsReplace(checkoutId: $checkoutId, lineItems: $lineItems) {
       userErrors {
         code
@@ -90,9 +87,4 @@ const CHECKOUT_LINE_ITEMS_REPLACE = gql`
   }
 `;
 
-export {
-  GET_PRODUCTS,
-  CREATE_CHECKOUT,
-  GET_CHECKOUT_ID,
-  CHECKOUT_LINE_ITEMS_REPLACE
-};
+export { GET_PRODUCTS, CREATE_CHECKOUT, GET_CHECKOUT_ID, CHECKOUT_LINE_ITEMS_REPLACE };

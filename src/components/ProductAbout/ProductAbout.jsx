@@ -13,12 +13,7 @@ export default function ProductAbout({ node }) {
     <Grid container>
       <Grid item xs={12}>
         {node.availableForSale ? (
-          <Grid
-            container
-            direction="row"
-            alignItems="center"
-            className={classes.availableForSale}
-          >
+          <Grid container direction="row" alignItems="center" className={classes.availableForSale}>
             <Grid item>
               <CheckCircleOutline />
             </Grid>
@@ -40,12 +35,7 @@ export default function ProductAbout({ node }) {
       </Grid>
       <Grid item xs={12}>
         <Typography variant="h4">{`Price: ${node.priceRange.maxVariantPrice.amount} ${node.priceRange.maxVariantPrice.currencyCode}`}</Typography>
-        <Button
-          fullWidth
-          disabled={!node.availableForSale}
-          variant="contained"
-          color="secondary"
-        >
+        <Button fullWidth disabled={!node.availableForSale} variant="contained" color="secondary">
           Add to cart
         </Button>
       </Grid>

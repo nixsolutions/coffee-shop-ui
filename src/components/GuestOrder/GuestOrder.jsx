@@ -50,13 +50,7 @@ export default function GuestOrder({ match: { params } }) {
               </Paper>
             </Paper>
             <ItemsCheckout data={{ node: { lineItems } }} />
-            <Button
-              color="primary"
-              component={Link}
-              to="/shop"
-              variant="contained"
-              fullWidth
-            >
+            <Button color="primary" component={Link} to="/shop" variant="contained" fullWidth>
               Go to shop
             </Button>
           </Grid>
