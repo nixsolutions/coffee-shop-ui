@@ -1,14 +1,8 @@
 import gql from 'graphql-tag';
 
 const CUSTOMER_UPDATE = gql`
-  mutation CUSTOMER_UPDATE(
-    $customerAccessToken: String!
-    $customer: CustomerUpdateInput!
-  ) {
-    customerUpdate(
-      customer: $customer
-      customerAccessToken: $customerAccessToken
-    ) {
+  mutation CUSTOMER_UPDATE($customerAccessToken: String!, $customer: CustomerUpdateInput!) {
+    customerUpdate(customer: $customer, customerAccessToken: $customerAccessToken) {
       customer {
         id
       }

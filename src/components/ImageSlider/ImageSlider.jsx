@@ -8,19 +8,10 @@ export default function ImageSlider({ images }) {
   const Slideshow = () => {
     return (
       <div className="slide-container">
-        <Slide
-          duration="5000"
-          transitionDuration="500"
-          infinite={false}
-          indicators={false}
-          arrows
-        >
+        <Slide duration="5000" transitionDuration="500" infinite={false} indicators={false} arrows>
           {images.map(({ node }) => (
             <div className="each-slide">
-              <div
-                className={classes.imageWrap}
-                style={{ backgroundImage: `url(${node.src})` }}
-              />
+              <div className={classes.imageWrap} style={{ backgroundImage: `url(${node.src})` }} />
             </div>
           ))}
         </Slide>

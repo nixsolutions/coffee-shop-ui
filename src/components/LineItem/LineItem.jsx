@@ -16,10 +16,7 @@ import useStyles from './Styles';
 import { GET_CHECKOUT_ID, CHECKOUT_LINE_ITEMS_REPLACE } from '../Shop/GraphQl';
 import Spinner from '../Spinner';
 import checkoutResolver from '../../helpers/checkoutResolver';
-import {
-  updateQuantityProduct,
-  removeFromCart
-} from '../../helpers/productsCheckoutService';
+import { updateQuantityProduct, removeFromCart } from '../../helpers/productsCheckoutService';
 import noPhotoAvailable from '../../media/noPhotoAvailable.png';
 
 export default function LineItem({ product, cartItemsQuery }) {
@@ -28,20 +25,20 @@ export default function LineItem({ product, cartItemsQuery }) {
   const {
     data: { checkoutId }
   } = useQuery(GET_CHECKOUT_ID);
-  const [
-    checkoutLineItemsReplace,
-    { loading: checkoutReplaceLoad, client }
-  ] = useMutation(CHECKOUT_LINE_ITEMS_REPLACE, {
-    refetchQueries: [
-      {
-        query: cartItemsQuery,
-        variables: { id: checkoutId }
+  const [checkoutLineItemsReplace, { loading: checkoutReplaceLoad, client }] = useMutation(
+    CHECKOUT_LINE_ITEMS_REPLACE,
+    {
+      refetchQueries: [
+        {
+          query: cartItemsQuery,
+          variables: { id: checkoutId }
+        }
+      ],
+      onCompleted: data => {
+        checkoutResolver(data, client);
       }
-    ],
-    onCompleted: data => {
-      checkoutResolver(data, client);
     }
-  });
+  );
 
   if (checkoutReplaceLoad) return <Spinner />;
   return (
@@ -58,8 +55,7 @@ export default function LineItem({ product, cartItemsQuery }) {
           )}
         </ListItemAvatar>
         <ListItemText
-          primary={`${product.title} Price: ${product.quantity *
-            product.variant.priceV2.amount}${
+          primary={`${product.title} Price: ${product.quantity * product.variant.priceV2.amount}${
             product.variant.priceV2.currencyCode
           }`}
         />
@@ -73,11 +69,8 @@ export default function LineItem({ product, cartItemsQuery }) {
                   defaultValue={product.quantity}
                   className={classes.quantityProduct}
                   onChange={e =>
-                    updateQuantityProduct(
-                      product.variant.id,
-                      e,
-                      checkoutLineItemsReplace
-                    )}
+                    updateQuantityProduct(product.variant.id, e, checkoutLineItemsReplace)
+                  }
                 />
               </InputLabel>
             </Grid>

@@ -11,24 +11,21 @@ export default function CheckoutEmailForm({ nextStep, checkoutData }) {
   const id = store.get('checkoutId');
   const [email, setEmail] = useState(checkoutData.node.email || '');
   const [formErrors, setFormErrors] = useState([]);
-  const [checkoutEmailUpdateV2, { loading }] = useMutation(
-    UPDATE_CHECKOUT_EMAIL,
-    {
-      refetchQueries: [
-        {
-          query: GET_CHECKOUT_ITEMS,
-          variables: { id }
-        }
-      ],
-      onCompleted: data => {
-        if (data.checkoutEmailUpdateV2.checkoutUserErrors.length > 0) {
-          setFormErrors(data.checkoutEmailUpdateV2.checkoutUserErrors);
-        } else {
-          nextStep();
-        }
+  const [checkoutEmailUpdateV2, { loading }] = useMutation(UPDATE_CHECKOUT_EMAIL, {
+    refetchQueries: [
+      {
+        query: GET_CHECKOUT_ITEMS,
+        variables: { id }
+      }
+    ],
+    onCompleted: data => {
+      if (data.checkoutEmailUpdateV2.checkoutUserErrors.length > 0) {
+        setFormErrors(data.checkoutEmailUpdateV2.checkoutUserErrors);
+      } else {
+        nextStep();
       }
     }
-  );
+  });
   const updateEmail = () => {
     checkoutEmailUpdateV2({
       variables: {

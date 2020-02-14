@@ -43,22 +43,19 @@ export default function CustomerShippingCreateForm() {
     },
     { name: 'country', label: 'Country', gridSm: 6 }
   ];
-  const [customerAddressCreate, { loading }] = useMutation(
-    CUSTOMER_ADDRESS_CREATE,
-    {
-      onCompleted: data => {
-        if (data.customerAddressCreate.customerUserErrors.length > 0) {
-          setFormErrors(data.customerAddressCreate.customerUserErrors);
-        }
-      },
-      refetchQueries: [
-        {
-          query: GET_CUSTOMER,
-          variables: { customerAccessToken: token }
-        }
-      ]
-    }
-  );
+  const [customerAddressCreate, { loading }] = useMutation(CUSTOMER_ADDRESS_CREATE, {
+    onCompleted: data => {
+      if (data.customerAddressCreate.customerUserErrors.length > 0) {
+        setFormErrors(data.customerAddressCreate.customerUserErrors);
+      }
+    },
+    refetchQueries: [
+      {
+        query: GET_CUSTOMER,
+        variables: { customerAccessToken: token }
+      }
+    ]
+  });
   const handleChange = event => {
     const { value, name } = event.target;
     setShippingData({

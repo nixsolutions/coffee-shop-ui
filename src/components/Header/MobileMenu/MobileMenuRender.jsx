@@ -34,9 +34,7 @@ export default function MobileMenuRender({
         </IconButton>
         <p>Messages</p>
       </MenuItem>
-      <MenuItem
-        onClick={() => client.writeData({ data: { isOpenCart: true } })}
-      >
+      <MenuItem onClick={() => client.writeData({ data: { isOpenCart: true } })}>
         <IconButton color="inherit">
           <Badge badgeContent={bucketItemsCount} color="secondary">
             <ShoppingCart />

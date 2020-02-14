@@ -25,11 +25,7 @@ export default function StepperCompletedCheckout({ data }) {
   };
 
   function getSteps() {
-    return [
-      'Enter customer email',
-      'Enter shipping address',
-      'Enter shipping type'
-    ];
+    return ['Enter customer email', 'Enter shipping address', 'Enter shipping type'];
   }
   function getStepContent(step) {
     switch (step) {

@@ -29,9 +29,7 @@ export default function ItemsCheckout({ data }) {
                   <Badge badgeContent={node.quantity} color="primary">
                     <CardMedia
                       className={classes.cardMedia}
-                      image={
-                        node.variant.product.images.edges[0].node.originalSrc
-                      }
+                      image={node.variant.product.images.edges[0].node.originalSrc}
                       title={node.title}
                     />
                   </Badge>

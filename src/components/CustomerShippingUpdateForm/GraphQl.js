@@ -6,11 +6,7 @@ const CUSTOMER_ADDRESS_UPDATE = gql`
     $address: MailingAddressInput!
     $id: ID!
   ) {
-    customerAddressUpdate(
-      customerAccessToken: $customerAccessToken
-      address: $address
-      id: $id
-    ) {
+    customerAddressUpdate(customerAccessToken: $customerAccessToken, address: $address, id: $id) {
       customerUserErrors {
         message
         code

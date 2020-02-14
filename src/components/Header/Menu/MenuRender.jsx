@@ -22,28 +22,16 @@ function MenuRender({ anchorEl, isMenuOpen, handleMenuClose, history }) {
     >
       {store.get('customer') === undefined ? (
         <div>
-          <MenuItem
-            onClick={handleMenuClose}
-            component={Link}
-            to="/customer/sign_in"
-          >
+          <MenuItem onClick={handleMenuClose} component={Link} to="/customer/sign_in">
             SignIn
           </MenuItem>
-          <MenuItem
-            onClick={handleMenuClose}
-            component={Link}
-            to="/customer/sign_up"
-          >
+          <MenuItem onClick={handleMenuClose} component={Link} to="/customer/sign_up">
             SignUp
           </MenuItem>
         </div>
       ) : (
         <div>
-          <MenuItem
-            onClick={handleMenuClose}
-            component={Link}
-            to="/customer/profile"
-          >
+          <MenuItem onClick={handleMenuClose} component={Link} to="/customer/profile">
             Profile
           </MenuItem>
           <MenuItem onClick={customerLogOut}>LogOut</MenuItem>

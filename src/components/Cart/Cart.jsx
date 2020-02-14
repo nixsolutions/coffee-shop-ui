@@ -21,20 +21,20 @@ export default function Cart() {
   const { data, loading } = useQuery(GET_CHECKOUT_ITEMS, {
     variables: { id: cartId }
   });
-  const [
-    checkoutLineItemsReplace,
-    { loading: checkoutReplaceLoad }
-  ] = useMutation(CHECKOUT_LINE_ITEMS_REPLACE, {
-    onCompleted: () => {
-      client.writeData({ data: { bucketItemsCount: 0 } });
-    },
-    refetchQueries: [
-      {
-        query: GET_CHECKOUT_ITEMS,
-        variables: { id: checkoutId }
-      }
-    ]
-  });
+  const [checkoutLineItemsReplace, { loading: checkoutReplaceLoad }] = useMutation(
+    CHECKOUT_LINE_ITEMS_REPLACE,
+    {
+      onCompleted: () => {
+        client.writeData({ data: { bucketItemsCount: 0 } });
+      },
+      refetchQueries: [
+        {
+          query: GET_CHECKOUT_ITEMS,
+          variables: { id: checkoutId }
+        }
+      ]
+    }
+  );
 
   const toggleDrawer = open => event => {
     if (event && event.currentTarget.id === 'cart') {
@@ -54,12 +54,7 @@ export default function Cart() {
   };
 
   const sideList = () => (
-    <div
-      id="cart"
-      className={classes.list}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-    >
+    <div id="cart" className={classes.list} role="presentation" onClick={toggleDrawer(false)}>
       <>
         <List>
           <Typography variant="h5" align="center">
@@ -67,22 +62,13 @@ export default function Cart() {
           </Typography>
           {data &&
             data.node.lineItems.edges.map(({ node }) => (
-              <LineItem
-                key={node.id}
-                product={node}
-                cartItemsQuery={GET_CHECKOUT_ITEMS}
-              />
+              <LineItem key={node.id} product={node} cartItemsQuery={GET_CHECKOUT_ITEMS} />
             ))}
         </List>
         <Divider />
         {data && data.node.lineItems.edges.length > 0 ? (
           <>
-            <Button
-              variant="contained"
-              fullWidth
-              color="secondary"
-              onClick={() => removeAllItem()}
-            >
+            <Button variant="contained" fullWidth color="secondary" onClick={() => removeAllItem()}>
               Clear cart
             </Button>
             <SplitButtonCheckout />

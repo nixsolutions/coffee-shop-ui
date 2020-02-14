@@ -39,14 +39,8 @@ const GET_CHECKOUT_SHIPPING_RATE = gql`
 `;
 
 const UPDATE_SHIPPING_LINE = gql`
-  mutation UPDATE_SHIPPING_LINE(
-    $checkoutId: ID!
-    $shippingRateHandle: String!
-  ) {
-    checkoutShippingLineUpdate(
-      checkoutId: $checkoutId
-      shippingRateHandle: $shippingRateHandle
-    ) {
+  mutation UPDATE_SHIPPING_LINE($checkoutId: ID!, $shippingRateHandle: String!) {
+    checkoutShippingLineUpdate(checkoutId: $checkoutId, shippingRateHandle: $shippingRateHandle) {
       checkout {
         shippingLine {
           handle

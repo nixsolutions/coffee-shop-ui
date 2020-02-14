@@ -20,10 +20,8 @@ cache.writeData({
     isOpenSideBar: false,
     isOpenCart: false,
     bucketItemsCount: sumBy(store.get('cartItems'), node => node.quantity) || 0,
-    customerToken:
-      (store.get('customer') && store.get('customer').token) || null,
-    customerTokenExpDate:
-      (store.get('customer') && store.get('customer').expDate) || null,
+    customerToken: (store.get('customer') && store.get('customer').token) || null,
+    customerTokenExpDate: (store.get('customer') && store.get('customer').expDate) || null,
     checkoutId: store.get('checkoutId') || null
   }
 });

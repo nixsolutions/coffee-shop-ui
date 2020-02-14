@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import {
-  Paper,
-  FormControlLabel,
-  Radio,
-  Typography,
-  Button
-} from '@material-ui/core';
+import { Paper, FormControlLabel, Radio, Typography, Button } from '@material-ui/core';
 import store from 'store';
 import Spinner from '../Spinner';
 import { GET_CHECKOUT_SHIPPING_RATE, UPDATE_SHIPPING_LINE } from './GraphQl';
@@ -19,28 +13,25 @@ export default function ShippingLineForm({ nextStep }) {
   const checkoutId = store.get('checkoutId');
   const [shipping, setShipping] = useState('');
 
-  const { data: { node } = {}, loading: queryLoading } = useQuery(
-    GET_CHECKOUT_SHIPPING_RATE,
+  const { data: { node } = {}, loading: queryLoading } = useQuery(GET_CHECKOUT_SHIPPING_RATE, {
+    variables: {
+      id: checkoutId
+    }
+  });
+  const [checkoutShippingLineUpdate, { loading: mutationLoading }] = useMutation(
+    UPDATE_SHIPPING_LINE,
     {
-      variables: {
-        id: checkoutId
+      refetchQueries: [
+        {
+          query: GET_CHECKOUT_ITEMS,
+          variables: { id: checkoutId }
+        }
+      ],
+      onCompleted: () => {
+        nextStep();
       }
     }
   );
-  const [
-    checkoutShippingLineUpdate,
-    { loading: mutationLoading }
-  ] = useMutation(UPDATE_SHIPPING_LINE, {
-    refetchQueries: [
-      {
-        query: GET_CHECKOUT_ITEMS,
-        variables: { id: checkoutId }
-      }
-    ],
-    onCompleted: () => {
-      nextStep();
-    }
-  });
 
   const updateShippingLine = () => {
     checkoutShippingLineUpdate({
@@ -55,7 +46,9 @@ export default function ShippingLineForm({ nextStep }) {
 
   return (
     <Paper className={classes.shippingForm}>
-      <Typography variant="h4" align="center">Available Shipping Rates</Typography>
+      <Typography variant="h4" align="center">
+        Available Shipping Rates
+      </Typography>
       {node.availableShippingRates.shippingRates.map(variant => (
         <FormControlLabel
           key={variant.title}

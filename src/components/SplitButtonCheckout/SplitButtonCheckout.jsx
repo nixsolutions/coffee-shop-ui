@@ -51,19 +51,9 @@ function SplitButtonCheckout({ history }) {
   };
 
   return (
-    <Grid
-      className={classes.splitButton}
-      container
-      direction="column"
-      alignItems="center"
-    >
+    <Grid className={classes.splitButton} container direction="column" alignItems="center">
       <Grid item xs={12}>
-        <ButtonGroup
-          variant="contained"
-          color="primary"
-          ref={anchorRef}
-          aria-label="split button"
-        >
+        <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
           <Button onClick={handleClick}>{options[selectedIndex]}</Button>
           <Button
             color="primary"
@@ -77,19 +67,12 @@ function SplitButtonCheckout({ history }) {
             <ArrowDropDownIcon />
           </Button>
         </ButtonGroup>
-        <Popper
-          open={open}
-          anchorEl={anchorRef.current}
-          role={undefined}
-          transition
-          disablePortal
-        >
+        <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
           {({ TransitionProps, placement }) => (
             <Grow
               {...TransitionProps}
               style={{
-                transformOrigin:
-                  placement === 'bottom' ? 'center top' : 'center bottom'
+                transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'
               }}
             >
               <Paper>
