@@ -34,7 +34,7 @@ export default function Product({ match: { params } }) {
           images={
             node.images.edges.length !== 0
               ? node.images.edges
-              : [{ node: { src: noPhotoAvailable } }]
+              : [{ node: { id: '1', src: noPhotoAvailable } }]
           }
         />
         {node.descriptionHtml ? (

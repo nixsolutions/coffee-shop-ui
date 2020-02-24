@@ -11,6 +11,13 @@ const GET_PRODUCT = gql`
         availableForSale
         descriptionHtml
         vendor
+        variants(first: 1) {
+          edges {
+            node {
+              id
+            }
+          }
+        }
         priceRange {
           maxVariantPrice {
             amount
