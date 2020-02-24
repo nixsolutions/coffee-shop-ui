@@ -26,7 +26,7 @@ function SplitButtonCheckout({ history }) {
 
   const handleClick = () => {
     if (options[selectedIndex] === 'Continue to sign in') {
-      history.push(`/customer/order/new/${cartId}`);
+      history.push('/customer/sign_in');
       client.writeData({ data: { isOpenCart: false } });
     } else {
       history.push(`/order/new/${cartId}`);
