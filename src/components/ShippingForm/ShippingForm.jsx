@@ -199,5 +199,6 @@ export default function ShippingForm({ nextStep, checkoutData, customer }) {
 
 ShippingForm.propTypes = {
   checkoutData: PropTypes.objectOf(Object).isRequired,
+  customer: PropTypes.objectOf(Object).isRequired,
   nextStep: PropTypes.func.isRequired
 };

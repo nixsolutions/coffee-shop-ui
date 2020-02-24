@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
-import { AppBar, Toolbar, IconButton, Typography, InputBase, Badge } from '@material-ui/core/';
+import { AppBar, Toolbar, IconButton, Typography, Badge } from '@material-ui/core/';
 import {
   Menu as MenuIcon,
-  Search as SearchIcon,
   AccountCircle,
   Mail as MailIcon,
   ShoppingCart,
@@ -64,19 +63,6 @@ function Header() {
           <Typography className={classes.title} variant="h6" noWrap component={Link} to="/">
             <img src={Logo} alt="" />
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">

@@ -117,12 +117,5 @@ export default function ProductAbout({ node }) {
 }
 
 ProductAbout.propTypes = {
-  node: PropTypes.shape({
-    availableForSale: PropTypes.bool.isRequired,
-    vendor: PropTypes.string.isRequired,
-    priceRange: PropTypes.objectOf({
-      maxVariantPrice: PropTypes.object,
-      minVariantPrice: PropTypes.object
-    }).isRequired
-  }).isRequired
+  node: PropTypes.objectOf(Object).isRequired
 };
