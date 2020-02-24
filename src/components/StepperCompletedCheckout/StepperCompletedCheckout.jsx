@@ -12,10 +12,16 @@ import ShippingForm from '../ShippingForm';
 import ShippingLineForm from '../ShippingLineForm';
 import useStyles from './Styles';
 
-export default function StepperCompletedCheckout({ data }) {
+export default function StepperCompletedCheckout({ data, customerData }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
-
+  const customerEmail = () => {
+    if (customerData) {
+      return customerData.data.customer.email;
+    } else {
+      return '';
+    }
+  };
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
@@ -30,9 +36,15 @@ export default function StepperCompletedCheckout({ data }) {
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <CheckoutEmailForm nextStep={handleNext} checkoutData={data} />;
+        return (
+          <CheckoutEmailForm
+            nextStep={handleNext}
+            checkoutData={data}
+            customerEmail={customerEmail}
+          />
+        );
       case 1:
-        return <ShippingForm nextStep={handleNext} checkoutData={data} />;
+        return <ShippingForm nextStep={handleNext} checkoutData={data} customer={customerData} />;
       case 2:
         return <ShippingLineForm nextStep={handleNext} />;
       default:
@@ -75,5 +87,6 @@ export default function StepperCompletedCheckout({ data }) {
 }
 
 StepperCompletedCheckout.propTypes = {
-  data: PropTypes.objectOf(Object).isRequired
+  data: PropTypes.objectOf(Object).isRequired,
+  customer: PropTypes.objectOf(Object).isRequired
 };

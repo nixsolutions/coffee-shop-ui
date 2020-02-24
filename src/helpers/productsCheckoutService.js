@@ -1,10 +1,9 @@
 import store from 'store';
 import filter from 'lodash/filter';
 
-const checkoutId = store.get('checkoutId');
-
 const updateQuantityProduct = (id, e, checkoutLineItemsReplace) => {
   e.preventDefault();
+  const checkoutId = store.get('checkoutId');
   const existingItemsCart = store.get('cartItems') || [];
   const existingItem = existingItemsCart.find(item => item.variantId === id);
   if (existingItem) {
@@ -21,6 +20,7 @@ const updateQuantityProduct = (id, e, checkoutLineItemsReplace) => {
 
 const removeFromCart = (id, checkoutLineItemsReplace) => {
   const existingItemsCart = store.get('cartItems') || [];
+  const checkoutId = store.get('checkoutId');
   const firteredItems = filter(existingItemsCart, item => {
     return item.variantId !== id;
   });

@@ -7,9 +7,10 @@ import Spinner from '../Spinner';
 import UPDATE_CHECKOUT_EMAIL from './GraphQl';
 import { GET_CHECKOUT_ITEMS } from '../Cart/GraphQL';
 
-export default function CheckoutEmailForm({ nextStep, checkoutData }) {
+export default function CheckoutEmailForm({ nextStep, checkoutData, customerEmail }) {
   const id = store.get('checkoutId');
-  const [email, setEmail] = useState(checkoutData.node.email || '');
+
+  const [email, setEmail] = useState(checkoutData.node.email || customerEmail || '');
   const [formErrors, setFormErrors] = useState([]);
   const [checkoutEmailUpdateV2, { loading }] = useMutation(UPDATE_CHECKOUT_EMAIL, {
     refetchQueries: [

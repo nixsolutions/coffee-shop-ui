@@ -11,7 +11,8 @@ const useStyles = makeStyles({
     width: 160
   },
   orderInfo: {
-    padding: '20px'
+    padding: '10px',
+    alignItems: 'center'
   },
   error: {
     color: 'red'

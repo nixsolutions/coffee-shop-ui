@@ -12,10 +12,12 @@ import Spinner from '../Spinner';
 import LineItem from '../LineItem';
 import SplitButtonCheckout from '../SplitButtonCheckout';
 import { CHECKOUT_LINE_ITEMS_REPLACE, GET_CHECKOUT_ID } from '../Shop/GraphQl';
+import { Link } from 'react-router-dom';
 
 export default function Cart() {
   const classes = useStyles();
   const cartId = store.get('checkoutId');
+  const customer = store.get('customer');
   const { data: { isOpenCart } = false, client } = useQuery(CART_OPEN_QUERY);
   const { data: { checkoutId } = {} } = useQuery(GET_CHECKOUT_ID);
   const { data, loading } = useQuery(GET_CHECKOUT_ITEMS, {
@@ -71,7 +73,18 @@ export default function Cart() {
             <Button variant="contained" fullWidth color="secondary" onClick={() => removeAllItem()}>
               Clear cart
             </Button>
-            <SplitButtonCheckout />
+            {customer ? (
+              <Button
+                fullWidth
+                component={Link}
+                to={`/customer/order/new/${cartId}`}
+                onClick={toggleDrawer(false)}
+              >
+                Go to checkout
+              </Button>
+            ) : (
+              <SplitButtonCheckout />
+            )}
           </>
         ) : (
           <Typography align="center" variant="h4">
