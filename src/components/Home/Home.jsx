@@ -1,17 +1,25 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import { Search as SearchIcon } from '@material-ui/icons/';
 import { InputBase, Grid, Typography } from '@material-ui/core/';
 import useStyles from './Styles';
-import GET_PRODUCTS_HOME from './GraphQl';
+import { GET_PRODUCTS_HOME, GET_SEARCH_RESULT } from './GraphQl';
 import Spinner from '../Spinner';
 import slide1 from '../../media/slide1.jpg';
 import ProductRecomendation from './ProductRecomendation';
+import SearchResult from '../SearchResult';
 
 function Home() {
   const { data, loading } = useQuery(GET_PRODUCTS_HOME);
+  const [search, { data: { products } = {}, loading: searchLoading, called }] = useLazyQuery(
+    GET_SEARCH_RESULT
+  );
   const classes = useStyles();
-
+  const onSearch = value => {
+    if (value !== '') {
+      search({ variables: { query: value } });
+    }
+  };
   return (
     <div className={classes.greetingUnit}>
       <img className={classes.slideImages} src={slide1} alt="" />
@@ -20,6 +28,7 @@ function Home() {
           <SearchIcon />
         </div>
         <InputBase
+          onChange={e => onSearch(e.target.value)}
           placeholder="Search…"
           classes={{
             root: classes.inputRoot,
@@ -28,6 +37,7 @@ function Home() {
           inputProps={{ 'aria-label': 'search' }}
         />
       </div>
+      <SearchResult products={products} searchLoading={searchLoading} called={called} />
       {loading ? (
         <Spinner />
       ) : (

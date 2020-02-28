@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import store from 'store';
+import PropTypes from 'prop-types';
 import { Grid, Typography, Paper, Button, Divider } from '@material-ui/core';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import GET_CUSTOMER from './GraphQl';
@@ -106,3 +107,10 @@ export default function CustomerOrderCreate({ match: { params }, history }) {
     </Grid>
   );
 }
+
+CustomerOrderCreate.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func
+  }).isRequired,
+  match: PropTypes.objectOf(Object).isRequired
+};

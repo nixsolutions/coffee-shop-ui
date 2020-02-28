@@ -88,5 +88,5 @@ export default function StepperCompletedCheckout({ data, customerData }) {
 
 StepperCompletedCheckout.propTypes = {
   data: PropTypes.objectOf(Object).isRequired,
-  customer: PropTypes.objectOf(Object).isRequired
+  customerData: PropTypes.objectOf(Object).isRequired
 };

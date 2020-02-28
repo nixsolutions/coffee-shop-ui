@@ -74,5 +74,6 @@ export default function CheckoutEmailForm({ nextStep, checkoutData, customerEmai
 
 CheckoutEmailForm.propTypes = {
   checkoutData: PropTypes.objectOf(Object).isRequired,
-  nextStep: PropTypes.func.isRequired
+  nextStep: PropTypes.func.isRequired,
+  customerEmail: PropTypes.string.isRequired
 };
