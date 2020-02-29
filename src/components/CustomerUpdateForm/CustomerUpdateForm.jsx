@@ -5,8 +5,10 @@ import { Grid, TextField, Button, Typography } from '@material-ui/core';
 import CUSTOMER_UPDATE from './GraphQl';
 import Spinner from '../Spinner';
 import setCustomerToken from '../../helpers/setCustomerToken';
+import useStyles from './Styles';
 
 export default function CustomerUpdateForm({ customer, token }) {
+  const classes = useStyles();
   const [formErrors, setFormErrors] = useState([]);
   const [customerUpdate, { loading, client }] = useMutation(CUSTOMER_UPDATE, {
     onCompleted: ({ customerUpdate: { customerAccessToken, customerUserErrors } }) => {
@@ -44,8 +46,10 @@ export default function CustomerUpdateForm({ customer, token }) {
   if (loading) return <Spinner />;
 
   return (
-    <>
-      <Typography>User update</Typography>
+    <div className={classes.formWrapper}>
+      <Typography align="center" variant="h4">
+        User update
+      </Typography>
       {formErrors.map(err => (
         <Typography color="error" key={err.message}>
           {`*${err.message}`}
@@ -109,11 +113,16 @@ export default function CustomerUpdateForm({ customer, token }) {
             />
           </Grid>
         </Grid>
-        <Button variant="contained" color="secondary" type="submit">
+        <Button
+          className={classes.updateButton}
+          variant="contained"
+          color="secondary"
+          type="submit"
+        >
           Update
         </Button>
       </form>
-    </>
+    </div>
   );
 }
 
