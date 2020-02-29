@@ -1,13 +1,18 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
+  paperWrapper: {
     backgroundColor: theme.palette.background.paper,
     marginTop: '40px'
   },
-  shippingWrapper: {
-    padding: '30px'
+  shippingInfo: {
+    padding: theme.spacing(2)
+  },
+  orderInfo: {
+    padding: theme.spacing(2)
+  },
+  orderName: {
+    backgroundColor: '#9de3d0'
   }
 }));
 

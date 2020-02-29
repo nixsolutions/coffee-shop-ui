@@ -6,7 +6,6 @@ import { AppBar, Toolbar, IconButton, Typography, Badge } from '@material-ui/cor
 import {
   Menu as MenuIcon,
   AccountCircle,
-  Mail as MailIcon,
   ShoppingCart,
   MoreVert as MoreIcon
 } from '@material-ui/icons/';
@@ -65,11 +64,6 @@ function Header() {
           </Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon className={classes.iconHeader} />
-              </Badge>
-            </IconButton>
             <IconButton
               color="inherit"
               onClick={() => client.writeData({ data: { isOpenCart: true } })}

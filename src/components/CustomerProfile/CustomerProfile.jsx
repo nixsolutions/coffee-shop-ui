@@ -8,6 +8,7 @@ import Spinner from '../Spinner';
 import CustomerUpdateForm from '../CustomerUpdateForm';
 import CustomerShippingCreateForm from '../CustomerShippingCreateForm';
 import CustomerShippingUpdateForm from '../CustomerShippingUpdateForm';
+import CustomerOrderList from '../CustomerOrderList';
 import useStyles from './Styles';
 
 function TabPanel(props) {
@@ -44,9 +45,10 @@ export default function CustomerProfile() {
   const { token } = store.get('customer');
   const classes = useStyles();
   const [value, setValue] = useState(0);
+  const [step, setStep] = useState(3);
 
-  const { data: { customer } = {}, loading } = useQuery(GET_CUSTOMER, {
-    variables: { customerAccessToken: token }
+  const { data: { customer } = {}, loading, refetch } = useQuery(GET_CUSTOMER, {
+    variables: { customerAccessToken: token, first: step }
   });
 
   const handleChange = (event, newValue) => {
@@ -56,38 +58,44 @@ export default function CustomerProfile() {
   if (loading) return <Spinner />;
 
   return (
-    <>
-      <Typography align="center" variant="h2">
-        Profile
-      </Typography>
-      <Grid container>
-        <Grid item xs={12}>
-          <CustomerUpdateForm customer={customer} token={token} />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography align="center" variant="h4">
-            Add or update sipping address
-          </Typography>
-          <div className={classes.root}>
-            <AppBar position="static">
-              <Tabs value={value} centered onChange={handleChange} aria-label="shipping tabs">
-                <Tab label="Create sipping address" {...a11yProps(0)} />
-                <Tab
-                  label="Update sipping address"
-                  disabled={!customer.addresses.edges.length > 0}
-                  {...a11yProps(1)}
-                />
-              </Tabs>
-            </AppBar>
-            <TabPanel value={value} index={0}>
-              <CustomerShippingCreateForm />
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-              <CustomerShippingUpdateForm currentAddresses={customer.addresses} token={token} />
-            </TabPanel>
-          </div>
-        </Grid>
+    <Grid container>
+      <Grid item xs={12} lg={6}>
+        <CustomerUpdateForm customer={customer} token={token} />
       </Grid>
-    </>
+      <Grid item xs={12} lg={6} className={classes.shippingWrapper}>
+        <Typography align="center" variant="h4">
+          Add or update sipping address
+        </Typography>
+        <div className={classes.root}>
+          <AppBar position="static">
+            <Tabs value={value} centered onChange={handleChange} aria-label="shipping tabs">
+              <Tab label="Create sipping address" {...a11yProps(0)} />
+              <Tab
+                label="Update sipping address"
+                disabled={!customer.addresses.edges.length > 0}
+                {...a11yProps(1)}
+              />
+            </Tabs>
+          </AppBar>
+          <TabPanel value={value} index={0}>
+            <CustomerShippingCreateForm />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <CustomerShippingUpdateForm currentAddresses={customer.addresses} token={token} />
+          </TabPanel>
+        </div>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography align="center" variant="h4">
+          Orders
+        </Typography>
+        <CustomerOrderList
+          orders={customer.orders.edges}
+          refetch={refetch}
+          setStep={setStep}
+          step={step}
+        />
+      </Grid>
+    </Grid>
   );
 }
