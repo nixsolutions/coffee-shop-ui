@@ -1,21 +1,17 @@
-# You should always specify a full version here to ensure all of your developers
-# are running the same version of Node.
+# build environment
 FROM node:12.2.0-alpine as build
+WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
+COPY package.json /app/package.json
+RUN yarn install --silent
+RUN yarn install react-scripts@3.4.0 -g --silent
+COPY . /app
+RUN yarn build
 
-# Override the base log level (info).
-ENV NPM_CONFIG_LOGLEVEL warn
-
-# Install and configure `serve`.
-RUN yarn global add serve
-CMD serve -s build -l 3000
-EXPOSE 3000
-
-# Install all dependencies of the current project.
-COPY package.json package.json
-RUN yarn install
-
-# Copy all local files into the image.
-COPY . .
-
-# Build for production.
-RUN yarn build --production
+# production environment
+FROM nginx:1.16.0-alpine
+COPY --from=build /app/build /usr/share/nginx/html
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx/nginx.conf /etc/nginx/conf.d
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
