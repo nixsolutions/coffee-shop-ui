@@ -16,7 +16,7 @@ import client from '../../apollo/apolloClient';
 import GET_CART_ITEM_COUNT from './GraphQl';
 import MobileMenuRender from './MobileMenu';
 import MenuRender from './Menu';
-import Logo from '../../media/logodark.png';
+import Logo from '../../media/logo.png';
 
 function Header() {
   const classes = useStyles();
@@ -59,7 +59,7 @@ function Header() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap component={Link} to="/">
+          <Typography component={Link} to="/">
             <img src={Logo} alt="" />
           </Typography>
           <div className={classes.grow} />
