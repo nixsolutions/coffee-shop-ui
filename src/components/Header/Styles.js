@@ -13,14 +13,6 @@ const useStyles = makeStyles(theme => ({
     color: '#4F3429',
     marginRight: theme.spacing(2)
   },
-  title: {
-    color: '#FFF',
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-      textDecoration: 'none'
-    }
-  },
   inputRoot: {
     color: 'inherit'
   },

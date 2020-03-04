@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import parse from 'html-react-parser';
 import sumBy from 'lodash/sumBy';
 import store from 'store';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 import RemoveCircleOutline from '@material-ui/icons/RemoveCircleOutline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import useStyles from './Styles';
 import Spinner from '../Spinner';
+import LocationProductMap from '../LocationProductMap';
 import { CREATE_CHECKOUT, CHECKOUT_LINE_ITEMS_REPLACE, GET_CHECKOUT_ID } from '../Shop/GraphQl';
 import { GET_CHECKOUT_ITEMS } from '../Cart/GraphQL';
 import checkoutResolver from '../../helpers/checkoutResolver';
@@ -74,16 +75,14 @@ export default function ProductAbout({ node }) {
   };
   if (checkoutCreateLoad || checkoutReplaceLoad) return <Spinner />;
   return (
-    <Grid container>
+    <Grid container className={classes.main}>
       <Grid item xs={12}>
-        {node.availableForSale ? (
-          <Grid container direction="row" alignItems="center" className={classes.availableForSale}>
-            <Grid item>
-              <CheckCircleOutline />
-            </Grid>
-            <Grid item>Are available</Grid>
-          </Grid>
-        ) : (
+        <Typography variant="h3" align="center">
+          {node.title}
+        </Typography>
+      </Grid>
+      <Grid item xs={12}>
+        {node.availableForSale ? null : (
           <Grid
             container
             direction="row"
@@ -98,19 +97,30 @@ export default function ProductAbout({ node }) {
         )}
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="h4">{`Price: ${node.priceRange.maxVariantPrice.amount} ${node.priceRange.maxVariantPrice.currencyCode}`}</Typography>
+        <Typography variant="h5">{`Vendor: ${node.vendor}`}</Typography>
+      </Grid>
+      <Grid item xs={12}>
+        {node.descriptionHtml ? (
+          <Typography align="justify">{parse(node.descriptionHtml)}</Typography>
+        ) : null}
+        <Typography
+          align="center"
+          variant="h6"
+        >{`${node.priceRange.maxVariantPrice.amount} ${node.priceRange.maxVariantPrice.currencyCode}`}</Typography>
         <Button
-          fullWidth
+          className={classes.byButton}
           disabled={!node.availableForSale}
           variant="contained"
-          color="secondary"
+          disableElevation
           onClick={() => addToCart(node.variants.edges[0].node.id, 1)}
         >
           Add to cart
         </Button>
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="h5">{`Vendor: ${node.vendor}`}</Typography>
+        <LocationProductMap
+          position={node.metafields.edges.length > 0 ? node.metafields.edges[0].node.value : null}
+        />
       </Grid>
     </Grid>
   );

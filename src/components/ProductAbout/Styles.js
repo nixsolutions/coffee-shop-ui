@@ -8,6 +8,22 @@ const useStyles = makeStyles(() => ({
   notAvailableForSale: {
     color: '#f84147',
     backgroundColor: '#f4faf6'
+  },
+  main: {
+    padding: '20px'
+  },
+  byButton: {
+    marginLeft: '30%',
+    marginRight: '30%',
+    width: '40%',
+    backgroundColor: '#4F3429',
+    borderRadius: '20px',
+    color: '#E2DBD5',
+    '&:hover': {
+      backgroundColor: '#4F3429',
+      borderColor: '#925A41',
+      boxShadow: 'none'
+    }
   }
 }));
 
