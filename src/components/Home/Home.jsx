@@ -5,7 +5,6 @@ import { InputBase, Grid, Typography } from '@material-ui/core/';
 import useStyles from './Styles';
 import { GET_PRODUCTS_HOME, GET_SEARCH_RESULT } from './GraphQl';
 import Spinner from '../Spinner';
-import slide1 from '../../media/slide1.jpg';
 import ProductRecomendation from './ProductRecomendation';
 import SearchResult from '../SearchResult';
 
@@ -22,7 +21,6 @@ function Home() {
   };
   return (
     <div className={classes.greetingUnit}>
-      <img className={classes.slideImages} src={slide1} alt="" />
       <div className={classes.search}>
         <div className={classes.searchIcon}>
           <SearchIcon />

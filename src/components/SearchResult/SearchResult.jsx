@@ -37,7 +37,7 @@ export default function SearchResult({ products, searchLoading, called }) {
                       title="Contemplative Reptile"
                     />
                     <CardContent>
-                      <Typography className={classes.cardName} variant="h5" component="h2">
+                      <Typography className={classes.cardName} variant="h5" noWrap>
                         {node.title}
                       </Typography>
                       <Typography align="center" variant="body2">
