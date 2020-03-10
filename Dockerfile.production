@@ -1,8 +1,5 @@
 # build environment
 FROM node:12.2.0-alpine as build
-RUN yarn global add serve
-CMD serve -s build -l 3001
-EXPOSE 3001
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /app/package.json
@@ -11,13 +8,10 @@ RUN yarn global add react-scripts@3.4.0
 COPY . /app
 RUN yarn build
 
-# Base image
-FROM nginx
-RUN apt-get update -qq && apt-get -y install apache2-utils
-ENV FRONT_ROOT /var/www/coffee-shop-ui
-WORKDIR $FRONT_ROOT
-RUN mkdir log
+# production environment
+FROM nginx:1.16.0-alpine
+COPY --from=build /app/build /usr/share/nginx/html
 RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
-CMD [ "nginx", "-g", "daemon off;" ]
+CMD ["nginx", "-g", "daemon off;"] 
