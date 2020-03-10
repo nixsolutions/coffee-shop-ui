@@ -77,9 +77,7 @@ export default function ProductAbout({ node }) {
   return (
     <Grid container className={classes.main}>
       <Grid item xs={12}>
-        <Typography variant="h3" align="center">
-          {node.title}
-        </Typography>
+        <Typography variant="h4">{node.title}</Typography>
       </Grid>
       <Grid item xs={12}>
         {node.availableForSale ? null : (
@@ -97,11 +95,11 @@ export default function ProductAbout({ node }) {
         )}
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="h5">{`Vendor: ${node.vendor}`}</Typography>
+        <Typography variant="h6">{`Vendor: ${node.vendor}`}</Typography>
       </Grid>
       <Grid item xs={12}>
         {node.descriptionHtml ? (
-          <Typography align="justify">{parse(node.descriptionHtml)}</Typography>
+          <Typography variant="subtitle2">{parse(node.descriptionHtml)}</Typography>
         ) : null}
         <Typography
           align="center"

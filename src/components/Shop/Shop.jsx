@@ -105,7 +105,7 @@ export default function Shop() {
                 title={node.title}
               />
               <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
+                <Typography noWrap variant="h6">
                   {node.title}
                 </Typography>
                 <Typography noWrap variant="body2" color="textSecondary" component="p">
