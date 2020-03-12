@@ -17,6 +17,16 @@ const GET_PRODUCTS = gql`
               }
             }
           }
+          priceRange {
+            maxVariantPrice {
+              amount
+              currencyCode
+            }
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+          }
           variants(first: 1) {
             edges {
               node {
