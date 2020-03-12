@@ -6,6 +6,15 @@ const useStyles = makeStyles({
   },
   fullList: {
     width: 'auto'
+  },
+  emptyCart: {
+    marginTop: '20px',
+    fontSize: '70px',
+    color: '#34495E'
+  },
+  checkoutButton: {
+    backgroundColor: '#91F3F6',
+    marginTop: '10px'
   }
 });
 

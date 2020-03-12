@@ -94,7 +94,7 @@ export default function CustomerOrderCreate({ match: { params }, history }) {
             onClick={() => completeFree()}
           >
             <Typography variant="h5" align="center">
-              Confirm and pay (free)
+              Confirm and pay
             </Typography>
           </Button>
           {errors.map(err => (
