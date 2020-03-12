@@ -16,8 +16,8 @@ import CustomerProfile from '../CustomerProfile';
 
 function App() {
   return (
-    <ErrorBoundary>
-      <Router>
+    <Router>
+      <ErrorBoundary>
         <Container maxWidth={false}>
           <Header />
           <Box mt={12}>
@@ -35,8 +35,8 @@ function App() {
             </Switch>
           </Box>
         </Container>
-      </Router>
-    </ErrorBoundary>
+      </ErrorBoundary>
+    </Router>
   );
 }
 

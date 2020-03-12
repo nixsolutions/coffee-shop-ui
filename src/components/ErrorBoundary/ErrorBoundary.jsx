@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 import styles from './Styles';
+import './face.scss';
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -22,10 +24,24 @@ class ErrorBoundary extends Component {
     const { hasError } = this.state;
     const { children } = this.props;
     const { classes } = this.props;
+    const goToHome = () => {
+      this.setState({
+        hasError: false
+      });
+    };
     if (hasError) {
       return (
         <div className={classes.wraper}>
-          <ErrorOutlineIcon className={classes.errorIcon} />
+          <div className="face">
+            <div className="band">
+              <div className="red"></div>
+              <div className="white"></div>
+              <div className="blue"></div>
+            </div>
+            <div className="eyes"></div>
+            <div className="dimples"></div>
+            <div className="mouth"></div>
+          </div>
           <Typography variant="h2" className={classes.head}>
             OOOPS!
           </Typography>
@@ -33,6 +49,17 @@ class ErrorBoundary extends Component {
             Sorry, something went wrong.
           </Typography>
           <Divider variant="inset" component="div" />
+          <Button
+            className={classes.goToHome}
+            variant="contained"
+            color="primary"
+            component={Link}
+            to="/"
+            fullWidth
+            onClick={() => goToHome()}
+          >
+            Return home
+          </Button>
         </div>
       );
     }
