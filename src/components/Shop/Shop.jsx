@@ -111,6 +111,9 @@ export default function Shop() {
                 <Typography noWrap variant="body2" color="textSecondary" component="p">
                   {node.description}
                 </Typography>
+                <Typography variant="body2" color="secondary" align="center">
+                  {`${node.priceRange.maxVariantPrice.amount} ${node.priceRange.maxVariantPrice.currencyCode}`}
+                </Typography>
               </CardContent>
             </CardActionArea>
             <CardActions>

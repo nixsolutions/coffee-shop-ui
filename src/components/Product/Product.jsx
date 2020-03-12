@@ -17,7 +17,6 @@ export default function Product({ match: { params } }) {
   });
 
   if (loading) return <Spinner />;
-
   return (
     <Grid container>
       <Grid item lg={7} xs={12}>
