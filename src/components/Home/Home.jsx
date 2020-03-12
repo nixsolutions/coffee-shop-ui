@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery, useLazyQuery } from '@apollo/react-hooks';
 import { Search as SearchIcon } from '@material-ui/icons/';
 import { InputBase, Grid, Typography } from '@material-ui/core/';
@@ -9,14 +9,22 @@ import ProductRecomendation from './ProductRecomendation';
 import SearchResult from '../SearchResult';
 
 function Home() {
+  const [result, setResult] = useState(null);
   const { data, loading } = useQuery(GET_PRODUCTS_HOME);
   const [search, { data: { products } = {}, loading: searchLoading, called }] = useLazyQuery(
-    GET_SEARCH_RESULT
+    GET_SEARCH_RESULT,
+    {
+      onCompleted: () => {
+        setResult(products);
+      }
+    }
   );
   const classes = useStyles();
   const onSearch = value => {
     if (value !== '') {
       search({ variables: { query: value } });
+    } else {
+      setResult(null);
     }
   };
   return (
@@ -26,16 +34,16 @@ function Home() {
           <SearchIcon />
         </div>
         <InputBase
+          fullWidth
           onChange={e => onSearch(e.target.value)}
           placeholder="Search…"
           classes={{
             root: classes.inputRoot,
             input: classes.inputInput
           }}
-          inputProps={{ 'aria-label': 'search' }}
         />
       </div>
-      <SearchResult products={products} searchLoading={searchLoading} called={called} />
+      <SearchResult products={result} searchLoading={searchLoading} called={called} />
       {loading ? (
         <Spinner />
       ) : (

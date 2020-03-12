@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
@@ -55,9 +56,16 @@ export default function LineItem({ product, cartItemsQuery }) {
           )}
         </ListItemAvatar>
         <ListItemText
-          primary={`${product.title} Price: ${product.quantity * product.variant.priceV2.amount}${
-            product.variant.priceV2.currencyCode
-          }`}
+          primary={product.title}
+          secondary={
+            <React.Fragment>
+              <Typography component="span" variant="body2" color="secondary">
+                {`Price: ${product.quantity * product.variant.priceV2.amount}${
+                  product.variant.priceV2.currencyCode
+                }`}
+              </Typography>
+            </React.Fragment>
+          }
         />
         <ListItemSecondaryAction>
           <Grid container direction="row">

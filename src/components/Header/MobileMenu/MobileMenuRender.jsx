@@ -5,7 +5,6 @@ import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 
 export default function MobileMenuRender({
@@ -26,14 +25,6 @@ export default function MobileMenuRender({
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
       <MenuItem onClick={() => client.writeData({ data: { isOpenCart: true } })}>
         <IconButton color="inherit">
           <Badge badgeContent={bucketItemsCount} color="secondary">

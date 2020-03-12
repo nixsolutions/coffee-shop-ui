@@ -88,7 +88,7 @@ function GuestOrderCreate({ history }) {
             onClick={() => completeFree()}
           >
             <Typography variant="h5" align="center">
-              Confirm and pay (free)
+              Confirm and pay
             </Typography>
           </Button>
           {errors.length > 0 &&

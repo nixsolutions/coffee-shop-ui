@@ -13,6 +13,7 @@ import LineItem from '../LineItem';
 import SplitButtonCheckout from '../SplitButtonCheckout';
 import { CHECKOUT_LINE_ITEMS_REPLACE, GET_CHECKOUT_ID } from '../Shop/GraphQl';
 import { Link } from 'react-router-dom';
+import RemoveShoppingCartIcon from '@material-ui/icons/RemoveShoppingCart';
 
 export default function Cart() {
   const classes = useStyles();
@@ -60,7 +61,7 @@ export default function Cart() {
       <>
         <List>
           <Typography variant="h5" align="center">
-            Cart
+            Shopping cart
           </Typography>
           {data &&
             data.node.lineItems.edges.map(({ node }) => (
@@ -76,7 +77,9 @@ export default function Cart() {
             {customer ? (
               <Button
                 fullWidth
+                variant="contained"
                 component={Link}
+                className={classes.checkoutButton}
                 to={`/customer/order/new/${cartId}`}
                 onClick={toggleDrawer(false)}
               >
@@ -87,9 +90,14 @@ export default function Cart() {
             )}
           </>
         ) : (
-          <Typography align="center" variant="h4">
-            Cart is empty
-          </Typography>
+          <>
+            <Typography align="center" variant="h6">
+              Cart is empty
+            </Typography>
+            <Typography align="center">
+              <RemoveShoppingCartIcon className={classes.emptyCart} />
+            </Typography>
+          </>
         )}
       </>
     </div>
