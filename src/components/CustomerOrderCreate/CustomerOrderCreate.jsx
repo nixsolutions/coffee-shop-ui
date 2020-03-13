@@ -15,7 +15,6 @@ export default function CustomerOrderCreate({ match: { params }, history }) {
   const { cartId } = params;
   const classes = useStyles();
   const customerToken = store.get('customer').token;
-  const checkoutId = store.get('checkoutId');
   const [errors, setErrors] = useState([]);
   const { data, loading } = useQuery(GET_CUSTOMER, {
     variables: {
@@ -28,7 +27,7 @@ export default function CustomerOrderCreate({ match: { params }, history }) {
     }
   });
 
-  const [checkoutCompleteFree, { loading: loadCheckoutComplete, client }] = useMutation(
+  const [checkoutCompleteFree, { loading: loadCheckoutComplete }] = useMutation(
     CHECKOUT_COMPLETE_FREE,
     {
       onCompleted: ({ checkoutCompleteFree: { checkoutUserErrors, checkout } }) => {
@@ -36,16 +35,13 @@ export default function CustomerOrderCreate({ match: { params }, history }) {
         if (hasError) {
           setErrors(checkoutUserErrors);
         } else {
-          store.remove('checkoutId');
-          store.remove('cartItems');
-          client.writeData({ data: { bucketItemsCount: 0, checkoutId: null } });
           history.push(`/order/${checkout.id}`);
         }
       },
       refetchQueries: [
         {
           query: GET_CHECKOUT_ITEMS,
-          variables: { id: checkoutId }
+          variables: { id: cartId }
         }
       ]
     }
@@ -54,7 +50,7 @@ export default function CustomerOrderCreate({ match: { params }, history }) {
   const completeFree = () => {
     checkoutCompleteFree({
       variables: {
-        checkoutId
+        checkoutId: cartId
       }
     });
   };

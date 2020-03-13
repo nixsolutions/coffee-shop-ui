@@ -17,7 +17,7 @@ import client from '../../apollo/apolloClient';
 
 const options = ['Continue to sign in', 'Continue as guest'];
 
-function SplitButtonCheckout({ history }) {
+function SplitButtonCheckout({ history, dropCart }) {
   const classes = useStyles();
   const cartId = store.get('checkoutId');
   const [open, setOpen] = useState(false);
@@ -29,6 +29,7 @@ function SplitButtonCheckout({ history }) {
       history.push('/customer/sign_in');
       client.writeData({ data: { isOpenCart: false } });
     } else {
+      dropCart();
       history.push(`/order/new/${cartId}`);
       client.writeData({ data: { isOpenCart: false } });
     }
@@ -54,7 +55,7 @@ function SplitButtonCheckout({ history }) {
     <Grid className={classes.splitButton} container direction="column" alignItems="center">
       <Grid item xs={12}>
         <ButtonGroup variant="contained" color="primary" ref={anchorRef} aria-label="split button">
-          <Button onClick={handleClick}>{options[selectedIndex]}</Button>
+          <Button onClick={() => handleClick()}>{options[selectedIndex]}</Button>
           <Button
             color="primary"
             size="small"
@@ -102,7 +103,8 @@ function SplitButtonCheckout({ history }) {
 SplitButtonCheckout.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func
-  }).isRequired
+  }).isRequired,
+  dropCart: PropTypes.func.isRequired
 };
 
 export default withRouter(SplitButtonCheckout);

@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { Paper, FormControlLabel, Radio, Typography, Button } from '@material-ui/core';
-import store from 'store';
 import Spinner from '../Spinner';
 import { GET_CHECKOUT_SHIPPING_RATE, UPDATE_SHIPPING_LINE } from './GraphQl';
 import { GET_CHECKOUT_ITEMS } from '../Cart/GraphQL';
 import useStyles from './Styles';
 
-export default function ShippingLineForm({ nextStep }) {
+export default function ShippingLineForm({ nextStep, checkoutData }) {
   const classes = useStyles();
-  const checkoutId = store.get('checkoutId');
+  const checkoutId = checkoutData.node.id;
   const [shipping, setShipping] = useState('');
 
   const { data: { node } = {}, loading: queryLoading } = useQuery(GET_CHECKOUT_SHIPPING_RATE, {
@@ -73,5 +72,6 @@ export default function ShippingLineForm({ nextStep }) {
 }
 
 ShippingLineForm.propTypes = {
-  nextStep: PropTypes.func.isRequired
+  nextStep: PropTypes.func.isRequired,
+  checkoutData: PropTypes.objectOf(Object).isRequired
 };

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import store from 'store';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -11,12 +10,12 @@ import ItemsCheckout from '../ItemsCheckout';
 import CHECKOUT_COMPLETE_FREE from './GraphQl';
 import StepperCompletedCheckout from '../StepperCompletedCheckout';
 
-function GuestOrderCreate({ history }) {
+function GuestOrderCreate({ match: { params }, history }) {
   const [errors, setErrors] = useState([]);
   const classes = useStyles();
-  const checkoutId = store.get('checkoutId');
+  const checkoutId = params.cartId;
 
-  const { data, loading, client } = useQuery(GET_CHECKOUT_ITEMS, {
+  const { data, loading } = useQuery(GET_CHECKOUT_ITEMS, {
     variables: {
       id: checkoutId
     }
@@ -30,9 +29,6 @@ function GuestOrderCreate({ history }) {
         if (hasError) {
           setErrors(checkoutUserErrors);
         } else {
-          store.remove('checkoutId');
-          store.remove('cartItems');
-          client.writeData({ data: { bucketItemsCount: 0, checkoutId: null } });
           history.push(`/order/${checkout.id}`);
         }
       },
@@ -106,7 +102,8 @@ function GuestOrderCreate({ history }) {
 GuestOrderCreate.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func
-  }).isRequired
+  }).isRequired,
+  match: PropTypes.objectOf(Object).isRequired
 };
 
 export default withRouter(GuestOrderCreate);
