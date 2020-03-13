@@ -46,7 +46,7 @@ export default function StepperCompletedCheckout({ data, customerData }) {
       case 1:
         return <ShippingForm nextStep={handleNext} checkoutData={data} customer={customerData} />;
       case 2:
-        return <ShippingLineForm nextStep={handleNext} />;
+        return <ShippingLineForm nextStep={handleNext} checkoutData={data} />;
       default:
         return 'Unknown step';
     }

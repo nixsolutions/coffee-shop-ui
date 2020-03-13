@@ -8,7 +8,7 @@ import Spinner from '../Spinner';
 import ItemsCheckout from '../ItemsCheckout';
 import useStyles from './Styles';
 
-export default function GuestOrder({ match: { params } }) {
+export default function Order({ match: { params } }) {
   const [lineItems, setLineItems] = useState({});
   const classes = useStyles();
   const { id } = params;
@@ -59,7 +59,7 @@ export default function GuestOrder({ match: { params } }) {
     </div>
   );
 }
-GuestOrder.propTypes = {
+Order.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.object
   }).isRequired

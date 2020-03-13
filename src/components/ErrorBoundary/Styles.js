@@ -1,16 +1,22 @@
 const styles = {
   wraper: {
     width: '100%',
-    marginTop: '30%'
+    marginTop: '20%'
   },
   head: {
     textAlign: 'center'
   },
   errorIcon: {
-    fontSize: 28
+    fontSize: 20
   },
   message: {
     textAlign: 'center'
+  },
+  goToHome: {
+    marginTop: '50px',
+    width: '60%',
+    marginLeft: '20%',
+    marginRight: '20%'
   }
 };
 

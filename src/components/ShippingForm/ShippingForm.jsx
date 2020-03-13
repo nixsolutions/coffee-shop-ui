@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import store from 'store';
 import find from 'lodash/find';
 import { useMutation } from '@apollo/react-hooks';
 import {
@@ -28,7 +27,7 @@ export default function ShippingForm({ nextStep, checkoutData, customer }) {
       return false;
     }
   };
-  const checkoutId = store.get('checkoutId');
+  const checkoutId = checkoutData.node.id;
   const [formErrors, setFormErrors] = useState([]);
   const { node } = checkoutData;
   const [addressData, setAddressData] = useState(

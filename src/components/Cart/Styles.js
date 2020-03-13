@@ -15,6 +15,9 @@ const useStyles = makeStyles({
   checkoutButton: {
     backgroundColor: '#91F3F6',
     marginTop: '10px'
+  },
+  empty: {
+    width: 400
   }
 });
 

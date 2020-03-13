@@ -11,13 +11,13 @@ import CustomerSignUp from '../CustomerSignUp';
 import CustomerLogIn from '../CustomerLogIn';
 import CustomerOrderCreate from '../CustomerOrderCreate';
 import GuestOrderCreate from '../GuestOrderCreate';
-import GuestOrder from '../GuestOrder';
+import Order from '../Order';
 import CustomerProfile from '../CustomerProfile';
 
 function App() {
   return (
-    <ErrorBoundary>
-      <Router>
+    <Router>
+      <ErrorBoundary>
         <Container maxWidth={false}>
           <Header />
           <Box mt={12}>
@@ -30,13 +30,13 @@ function App() {
               <Route exact path="/customer/sign_up" component={CustomerSignUp} />
               <Route exact path="/customer/sign_in" component={CustomerLogIn} />
               <Route exact path="/customer/profile" component={CustomerProfile} />
-              <Route exact path="/order/:id" component={GuestOrder} />
+              <Route exact path="/order/:id" component={Order} />
               <Redirect to="/" />
             </Switch>
           </Box>
         </Container>
-      </Router>
-    </ErrorBoundary>
+      </ErrorBoundary>
+    </Router>
   );
 }
 

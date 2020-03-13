@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Paper, TextField, Button, Typography } from '@material-ui/core';
 import { useMutation } from '@apollo/react-hooks';
-import store from 'store';
 import Spinner from '../Spinner';
 import UPDATE_CHECKOUT_EMAIL from './GraphQl';
 import { GET_CHECKOUT_ITEMS } from '../Cart/GraphQL';
 
 export default function CheckoutEmailForm({ nextStep, checkoutData, customerEmail }) {
-  const id = store.get('checkoutId');
-
+  const { id } = checkoutData.node;
   const [email, setEmail] = useState(checkoutData.node.email || customerEmail || '');
   const [formErrors, setFormErrors] = useState([]);
   const [checkoutEmailUpdateV2, { loading }] = useMutation(UPDATE_CHECKOUT_EMAIL, {
