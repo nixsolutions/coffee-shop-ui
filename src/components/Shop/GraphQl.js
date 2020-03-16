@@ -1,9 +1,13 @@
 import gql from 'graphql-tag';
 
 const GET_PRODUCTS = gql`
-  query GET_PRODUCTS {
-    products(first: 100) {
+  query GET_PRODUCTS($first: Int, $after: String) {
+    products(first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+      }
       edges {
+        cursor
         node {
           id
           title

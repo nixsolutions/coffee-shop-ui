@@ -5,8 +5,7 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   },
   cardContainer: {
-    padding: theme.spacing(2),
-    paddingLeft: '30px'
+    padding: '16px'
   },
   card: {
     maxWidth: 345,
@@ -18,6 +17,19 @@ const useStyles = makeStyles(theme => ({
   slide: {
     width: '100%',
     height: '100%'
+  },
+  extendedIcon: {
+    marginRight: theme.spacing(1)
+  },
+  fabContainer: {
+    marginTop: '30px',
+    width: '100%',
+    height: '35px'
+  },
+  scrollDown: {
+    width: '10%',
+    marginLeft: '45%',
+    marginRight: '45%'
   }
 }));
 
