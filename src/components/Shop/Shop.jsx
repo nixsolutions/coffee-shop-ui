@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import sumBy from 'lodash/sumBy';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import store from 'store';
+import { last } from 'lodash';
 import { Link } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
+import Fab from '@material-ui/core/Fab';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -25,10 +28,22 @@ import noPhotoAvailable from '../../media/noPhotoAvailable.png';
 
 export default function Shop() {
   const classes = useStyles();
+  const [listProducts, setListProducts] = useState(null);
+  const [lastCursor, setLastCursor] = useState(null);
+  const [lastPage, setLastPage] = useState(false);
+  const [itemsPerPage] = useState(5);
   const {
     data: { checkoutId }
   } = useQuery(GET_CHECKOUT_ID);
-  const { loading, data: { products } = {} } = useQuery(GET_PRODUCTS);
+  const { loading, fetchMore } = useQuery(GET_PRODUCTS, {
+    variables: {
+      first: itemsPerPage
+    },
+    onCompleted: data => {
+      setListProducts(data.products);
+      setLastCursor(last(data.products.edges).cursor);
+    }
+  });
 
   const [checkoutCreate, { loading: checkoutCreateLoad, client }] = useMutation(CREATE_CHECKOUT, {
     onCompleted: data => {
@@ -87,57 +102,91 @@ export default function Shop() {
     }
   };
 
-  if (loading) return <Spinner />;
+  const onLoadMore = () => {
+    fetchMore({
+      variables: {
+        after: lastCursor
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult || fetchMoreResult.products.edges.length < 0) return listProducts;
+        if (!fetchMoreResult.products.pageInfo.hasNextPage) {
+          setLastPage(true);
+        }
+        setLastCursor(last(fetchMoreResult.products.edges).cursor);
+        setListProducts(
+          Object.assign({}, listProducts, {
+            edges: [...listProducts.edges, ...fetchMoreResult.products.edges]
+          })
+        );
+      }
+    });
+  };
 
+  if (loading) return <Spinner />;
   return (
-    <Grid container className={classes.root} spacing={2} justify="center" direction="row">
-      {products.edges.map(({ node }) => (
-        <Grid item xs={12} lg={3} md={6} className={classes.cardContainer} key={node.id}>
-          <Card className={classes.card}>
-            <CardActionArea component={Link} to={`/shop/${node.id}`}>
-              <CardMedia
-                component="img"
-                alt="Contemplative Reptile"
-                height="250"
-                image={
-                  node.images.edges.length !== 0 ? node.images.edges[0].node.src : noPhotoAvailable
-                }
-                title={node.title}
-              />
-              <CardContent>
-                <Typography noWrap variant="h6">
-                  {node.title}
-                </Typography>
-                <Typography noWrap variant="body2" color="textSecondary" component="p">
-                  {node.description}
-                </Typography>
-                <Typography variant="body2" color="secondary" align="center">
-                  {`${node.priceRange.maxVariantPrice.amount} ${node.priceRange.maxVariantPrice.currencyCode}`}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-            <CardActions>
-              {node.availableForSale ? (
-                <Button
-                  fullWidth
-                  disabled={checkoutCreateLoad || checkoutReplaceLoad}
-                  color="secondary"
-                  onClick={() => addToCart(node.variants.edges[0].node.id, 1)}
-                >
-                  Add To Cart
+    <Grid container className={classes.root} justify="center" alignContent="center">
+      {listProducts &&
+        listProducts.edges.map(({ node }) => (
+          <Grid item xs={12} lg={3} md={6} className={classes.cardContainer} key={node.id}>
+            <Card className={classes.card}>
+              <CardActionArea component={Link} to={`/shop/${node.id}`}>
+                <CardMedia
+                  component="img"
+                  alt="Contemplative Reptile"
+                  height="250"
+                  image={
+                    node.images.edges.length !== 0
+                      ? node.images.edges[0].node.src
+                      : noPhotoAvailable
+                  }
+                  title={node.title}
+                />
+                <CardContent>
+                  <Typography noWrap variant="h6">
+                    {node.title}
+                  </Typography>
+                  <Typography noWrap variant="body2" color="textSecondary" component="p">
+                    {node.description}
+                  </Typography>
+                  <Typography variant="body2" color="secondary" align="center">
+                    {`${node.priceRange.maxVariantPrice.amount} ${node.priceRange.maxVariantPrice.currencyCode}`}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+              <CardActions>
+                {node.availableForSale ? (
+                  <Button
+                    fullWidth
+                    disabled={checkoutCreateLoad || checkoutReplaceLoad}
+                    color="secondary"
+                    onClick={() => addToCart(node.variants.edges[0].node.id, 1)}
+                  >
+                    Add To Cart
+                  </Button>
+                ) : (
+                  <Button fullWidth disabled>
+                    Sold out
+                  </Button>
+                )}
+                <Button fullWidth color="primary" component={Link} to={`/shop/${node.id}`}>
+                  More info
                 </Button>
-              ) : (
-                <Button fullWidth disabled>
-                  Sold out
-                </Button>
-              )}
-              <Button fullWidth color="primary" component={Link} to={`/shop/${node.id}`}>
-                More info
-              </Button>
-            </CardActions>
-          </Card>
-        </Grid>
-      ))}
+              </CardActions>
+            </Card>
+          </Grid>
+        ))}
+      <div className={classes.fabContainer}>
+        <Fab
+          variant="extended"
+          color="default"
+          onClick={() => onLoadMore()}
+          disabled={lastPage}
+          className={classes.scrollDown}
+        >
+          <ArrowDownwardIcon className={classes.extendedIcon} />
+          Load more
+        </Fab>
+      </div>
     </Grid>
   );
 }
