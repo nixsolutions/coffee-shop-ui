@@ -52,7 +52,7 @@ const useStyles = makeStyles(theme => ({
     marginLeft: '10%'
   },
   menuItem: {
-    borderBottom: '2px solid',
+    borderBottom: '2px solid #9dc6a7',
     margin: '10px',
     cursor: 'pointer',
     textDecoration: 'none',

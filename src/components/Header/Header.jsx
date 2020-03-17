@@ -48,14 +48,14 @@ function Header() {
           <Typography component={Link} to="/" className={classes.title}>
             <img src={Logo} alt="" />
           </Typography>
-          <Grid container spacing={2} className={classes.menuContainer}>
+          <Grid container spacing={1} className={classes.menuContainer}>
             <Grid item xs={5} className={classes.menuItem} component={Link} to="/">
-              <Typography variant="h5" align="center">
+              <Typography variant="h6" align="center">
                 Home
               </Typography>
             </Grid>
             <Grid item xs={5} className={classes.menuItem} component={Link} to="/shop">
-              <Typography variant="h5" align="center">
+              <Typography variant="h6" align="center">
                 Shop
               </Typography>
             </Grid>
