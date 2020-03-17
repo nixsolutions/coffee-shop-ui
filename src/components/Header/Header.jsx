@@ -2,13 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
-import { AppBar, Toolbar, IconButton, Typography, Badge } from '@material-ui/core/';
-import {
-  Menu as MenuIcon,
-  AccountCircle,
-  ShoppingCart,
-  MoreVert as MoreIcon
-} from '@material-ui/icons/';
+import { AppBar, Toolbar, IconButton, Typography, Badge, Grid } from '@material-ui/core/';
+import { AccountCircle, ShoppingCart, MoreVert as MoreIcon } from '@material-ui/icons/';
 import useStyles from './Styles';
 import SideBar from '../SideBar';
 import Cart from '../Cart';
@@ -50,18 +45,21 @@ function Header() {
     <div className={classes.grow}>
       <AppBar className={classes.header}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-            onClick={() => client.writeData({ data: { isOpenSideBar: true } })}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography component={Link} to="/">
+          <Typography component={Link} to="/" className={classes.title}>
             <img src={Logo} alt="" />
           </Typography>
+          <Grid container spacing={2} className={classes.menuContainer}>
+            <Grid item xs={5} className={classes.menuItem} component={Link} to="/">
+              <Typography variant="h5" align="center">
+                Home
+              </Typography>
+            </Grid>
+            <Grid item xs={5} className={classes.menuItem} component={Link} to="/shop">
+              <Typography variant="h5" align="center">
+                Shop
+              </Typography>
+            </Grid>
+          </Grid>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton

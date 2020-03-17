@@ -20,7 +20,7 @@ function App() {
       <ErrorBoundary>
         <Container maxWidth={false}>
           <Header />
-          <Box mt={12}>
+          <Box mt={15}>
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/order/new/:cartId" component={GuestOrderCreate} />

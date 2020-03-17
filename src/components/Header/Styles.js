@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => ({
   header: {
     backgroundColor: '#C0FFF6',
-    height: '90px',
-    padding: '10px'
+    height: 'auto',
+    padding: '5px'
   },
   grow: {
     flexGrow: 1
@@ -37,6 +37,25 @@ const useStyles = makeStyles(theme => ({
     }
   },
   iconHeader: {
+    color: '#4F3429'
+  },
+  title: {
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'block'
+    }
+  },
+  menuContainer: {
+    color: '#4F3429',
+    width: '80%',
+    marginRight: '10%',
+    marginLeft: '10%'
+  },
+  menuItem: {
+    borderBottom: '2px solid',
+    margin: '10px',
+    cursor: 'pointer',
+    textDecoration: 'none',
     color: '#4F3429'
   }
 }));
