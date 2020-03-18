@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import sumBy from 'lodash/sumBy';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import first from 'lodash/first';
+import uniqBy from 'lodash/uniqBy';
+import { useQuery, useMutation, useLazyQuery } from '@apollo/react-hooks';
 import store from 'store';
 import { last } from 'lodash';
 import { Link } from 'react-router-dom';
@@ -12,6 +14,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
+import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import useStyles from './Styles';
@@ -42,6 +45,14 @@ export default function Shop() {
     onCompleted: data => {
       setListProducts(data.products);
       setLastCursor(last(data.products.edges).cursor);
+      setLastPage(!data.products.pageInfo.hasNextPage);
+    }
+  });
+  const [getOrderedProduct, { loading: loadingOrderProduct }] = useLazyQuery(GET_PRODUCTS, {
+    onCompleted: data => {
+      setListProducts(data.products);
+      setLastCursor(last(data.products.edges).cursor);
+      setLastPage(!data.products.pageInfo.hasNextPage);
     }
   });
 
@@ -115,16 +126,41 @@ export default function Shop() {
         setLastCursor(last(fetchMoreResult.products.edges).cursor);
         setListProducts(
           Object.assign({}, listProducts, {
-            edges: [...listProducts.edges, ...fetchMoreResult.products.edges]
+            edges: uniqBy([...listProducts.edges, ...fetchMoreResult.products.edges], 'cursor')
           })
         );
       }
     });
   };
 
-  if (loading) return <Spinner />;
+  const changeOrder = value => {
+    const isSimple = value.split(',').length === 1;
+    if (isSimple) {
+      getOrderedProduct({ variables: { first: itemsPerPage, sortKey: value } });
+    } else {
+      const currentSortKey = first(value.split(','));
+      getOrderedProduct({
+        variables: { first: itemsPerPage, sortKey: currentSortKey, reverse: true }
+      });
+    }
+  };
+
+  if (loading || loadingOrderProduct) return <Spinner />;
   return (
     <Grid container className={classes.root} justify="center" alignContent="center">
+      <Grid item xs={12}>
+        <FormControl fullWidth>
+          <InputLabel id="select-label">Sort by</InputLabel>
+          <Select labelId="select-label" id="dselect" onChange={e => changeOrder(e.target.value)}>
+            <MenuItem value={'TITLE'}>Title A-Z</MenuItem>
+            <MenuItem value={'TITLE,true'}>Title Z-A</MenuItem>
+            <MenuItem value={'PRICE'}>Price (lowest first)</MenuItem>
+            <MenuItem value={'PRICE,true'}>Price (highest first)</MenuItem>
+            <MenuItem value={'RELEVANCE'}>Relevance</MenuItem>
+            <MenuItem value={'BEST_SELLING'}>Best selling</MenuItem>
+          </Select>
+        </FormControl>
+      </Grid>
       {listProducts &&
         listProducts.edges.map(({ node }) => (
           <Grid item xs={12} lg={3} md={6} className={classes.cardContainer} key={node.id}>
@@ -183,8 +219,7 @@ export default function Shop() {
           disabled={lastPage}
           className={classes.scrollDown}
         >
-          <ArrowDownwardIcon className={classes.extendedIcon} />
-          Load more
+          <ArrowDownwardIcon />
         </Fab>
       </div>
     </Grid>

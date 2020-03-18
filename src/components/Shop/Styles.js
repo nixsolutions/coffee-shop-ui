@@ -18,9 +18,6 @@ const useStyles = makeStyles(theme => ({
     width: '100%',
     height: '100%'
   },
-  extendedIcon: {
-    marginRight: theme.spacing(1)
-  },
   fabContainer: {
     marginTop: '30px',
     width: '100%',

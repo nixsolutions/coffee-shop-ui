@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 const GET_PRODUCTS = gql`
-  query GET_PRODUCTS($first: Int, $after: String) {
-    products(first: $first, after: $after) {
+  query GET_PRODUCTS($first: Int, $after: String, $sortKey: ProductSortKeys, $reverse: Boolean) {
+    products(first: $first, after: $after, sortKey: $sortKey, reverse: $reverse) {
       pageInfo {
         hasNextPage
       }
