@@ -1,4 +1,4 @@
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   greetingUnit: {
@@ -6,30 +6,13 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     width: 'inherit'
   },
-  slideImages: {
-    height: '300px',
-    opacity: '0.75'
-  },
   search: {
-    width: '50%',
+    width: '60%',
     color: '#4F3429',
     textAlign: 'left',
     margin: '16px auto',
     position: 'relative',
-    borderRadius: '16px',
-    backgroundColor: fade('#4F3429', 0.15),
-    '&:hover': {
-      backgroundColor: fade('#4F3429', 0.25)
-    }
-  },
-  searchIcon: {
-    width: theme.spacing(7),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
+    backgroundColor: '#fcf8e8'
   },
   inputRoot: {
     color: 'inherit'
@@ -54,6 +37,16 @@ const useStyles = makeStyles(theme => ({
   },
   media: {
     height: 140
+  },
+  searchInput: {
+    marginTop: '16px',
+    marginLeft: '5px'
+  },
+  groupButton: {
+    marginTop: '9px'
+  },
+  searcButton: {
+    margin: '3px'
   }
 }));
 
