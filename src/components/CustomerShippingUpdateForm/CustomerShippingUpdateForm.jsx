@@ -15,6 +15,8 @@ import {
 import Spinner from '../Spinner';
 import GET_CUSTOMER from '../CustomerProfile/GraphQl';
 import CUSTOMER_ADDRESS_UPDATE from './GraphQl';
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
 
 export default function CustomerShippingUpdateForm({ currentAddresses, token }) {
   const [currentAddress, setCurrentAddress] = useState(currentAddresses.edges[0].node);
@@ -29,7 +31,7 @@ export default function CustomerShippingUpdateForm({ currentAddresses, token }) 
     refetchQueries: [
       {
         query: GET_CUSTOMER,
-        variables: { customerAccessToken: token }
+        variables: { customerAccessToken: token, first: 3 }
       }
     ]
   });
@@ -45,6 +47,13 @@ export default function CustomerShippingUpdateForm({ currentAddresses, token }) 
   const updateFormAddress = event => {
     const { value, name } = event.target;
     setCurrentAddress({ ...currentAddress, [name]: value });
+  };
+
+  const handleChangePhone = event => {
+    setCurrentAddress({
+      ...currentAddress,
+      ['phone']: event
+    });
   };
 
   const handleSubmit = () => {
@@ -134,17 +143,6 @@ export default function CustomerShippingUpdateForm({ currentAddresses, token }) 
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl variant="filled" fullWidth>
-            <InputLabel htmlFor="phoneUpdate">Phone</InputLabel>
-            <FilledInput
-              id="phoneUpdate"
-              name="phone"
-              value={currentAddress.phone}
-              onChange={updateFormAddress}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <FormControl variant="filled" fullWidth>
             <InputLabel htmlFor="zipUpdate">ZIP Code</InputLabel>
             <FilledInput
               id="zipUpdate"
@@ -187,7 +185,7 @@ export default function CustomerShippingUpdateForm({ currentAddresses, token }) 
             />
           </FormControl>
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <FormControl variant="filled" fullWidth>
             <InputLabel htmlFor="updateCountry">Country</InputLabel>
             <FilledInput
@@ -197,6 +195,9 @@ export default function CustomerShippingUpdateForm({ currentAddresses, token }) 
               onChange={updateFormAddress}
             />
           </FormControl>
+        </Grid>
+        <Grid item xs={12}>
+          <PhoneInput value={currentAddress.phone} onChange={event => handleChangePhone(event)} />
         </Grid>
         <Grid item xs={12}>
           <Button fullWidth variant="contained" color="primary" type="submit">

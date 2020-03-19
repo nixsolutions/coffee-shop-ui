@@ -63,9 +63,6 @@ export default function CustomerProfile() {
         <CustomerUpdateForm customer={customer} token={token} />
       </Grid>
       <Grid item xs={12} lg={6} className={classes.shippingWrapper}>
-        <Typography align="center" variant="h4">
-          Add or update sipping address
-        </Typography>
         <div className={classes.root}>
           <AppBar position="static">
             <Tabs value={value} centered onChange={handleChange} aria-label="shipping tabs">
@@ -87,7 +84,7 @@ export default function CustomerProfile() {
       </Grid>
       <Grid item xs={12}>
         <Typography align="center" variant="h4">
-          Orders
+          Orders history:
         </Typography>
         <CustomerOrderList
           orders={customer.orders.edges}

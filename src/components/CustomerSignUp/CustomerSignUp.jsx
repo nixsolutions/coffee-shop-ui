@@ -16,6 +16,8 @@ import useStyles from './Styles';
 import { CUSTOMER_CREATE, CUSTOMER_ACCESS_TOKEN_CREATE } from './GraphQl';
 import Spinner from '../Spinner';
 import setCustomerToken from '../../helpers/setCustomerToken';
+import PhoneInput from 'react-phone-number-input';
+import 'react-phone-number-input/style.css';
 
 function CustomerSignUp({ history }) {
   const classes = useStyles();
@@ -131,15 +133,7 @@ function CustomerSignUp({ history }) {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                onChange={e => setPhone(e.target.value)}
-                variant="outlined"
-                fullWidth
-                id="phone"
-                label="Phone"
-                name="phone"
-                autoComplete="phone"
-              />
+              <PhoneInput onChange={e => setPhone(e)} />
             </Grid>
             <Grid item xs={12}>
               <TextField
