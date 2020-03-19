@@ -6,6 +6,8 @@ import CUSTOMER_ADDRESS_CREATE from './GraphQl';
 import Spinner from '../Spinner';
 import useStyles from './Styles';
 import GET_CUSTOMER from '../CustomerProfile/GraphQl';
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
 
 export default function CustomerShippingCreateForm() {
   const { token } = store.get('customer');
@@ -24,7 +26,6 @@ export default function CustomerShippingCreateForm() {
       label: 'Last name',
       gridSm: 6
     },
-    { name: 'phone', label: 'Phone', gridSm: false },
     {
       name: 'address1',
       label: 'Address line',
@@ -52,7 +53,7 @@ export default function CustomerShippingCreateForm() {
     refetchQueries: [
       {
         query: GET_CUSTOMER,
-        variables: { customerAccessToken: token }
+        variables: { customerAccessToken: token, first: 3 }
       }
     ]
   });
@@ -61,6 +62,13 @@ export default function CustomerShippingCreateForm() {
     setShippingData({
       ...shippingData,
       [name]: value
+    });
+  };
+
+  const handleChangePhone = event => {
+    setShippingData({
+      ...shippingData,
+      ['phone']: event
     });
   };
 
@@ -82,9 +90,6 @@ export default function CustomerShippingCreateForm() {
         createShippingCustomer();
       }}
     >
-      <Typography variant="h4" gutterBottom align="center">
-        Shipping address
-      </Typography>
       {formErrors.map(err => (
         <Typography color="error" key={err.message}>
           {`*${err.message}`}
@@ -104,6 +109,9 @@ export default function CustomerShippingCreateForm() {
             />
           </Grid>
         ))}
+        <Grid item xs={12}>
+          <PhoneInput onChange={event => handleChangePhone(event)} />
+        </Grid>
         <Grid item xs={12}>
           <Button fullWidth variant="contained" color="primary" type="submit">
             Add address

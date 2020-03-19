@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: '40px'
   },
   shippingWrapper: {
-    padding: '30px'
+    paddingLeft: '10px'
   }
 }));
 

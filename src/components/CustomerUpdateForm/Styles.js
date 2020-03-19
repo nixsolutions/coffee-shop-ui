@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
   formWrapper: {
-    padding: '30px'
+    marginTop: '40px'
   },
   updateButton: {
     marginTop: '20px',

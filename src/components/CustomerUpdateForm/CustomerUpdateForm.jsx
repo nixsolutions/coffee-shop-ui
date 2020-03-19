@@ -6,6 +6,8 @@ import CUSTOMER_UPDATE from './GraphQl';
 import Spinner from '../Spinner';
 import setCustomerToken from '../../helpers/setCustomerToken';
 import useStyles from './Styles';
+import 'react-phone-number-input/style.css';
+import PhoneInput from 'react-phone-number-input';
 
 export default function CustomerUpdateForm({ customer, token }) {
   const classes = useStyles();
@@ -43,13 +45,16 @@ export default function CustomerUpdateForm({ customer, token }) {
       [name]: value
     });
   };
+  const handleChangePhone = event => {
+    setUserData({
+      ...userData,
+      ['phone']: event
+    });
+  };
   if (loading) return <Spinner />;
 
   return (
     <div className={classes.formWrapper}>
-      <Typography align="center" variant="h4">
-        User update
-      </Typography>
       {formErrors.map(err => (
         <Typography color="error" key={err.message}>
           {`*${err.message}`}
@@ -60,6 +65,7 @@ export default function CustomerUpdateForm({ customer, token }) {
           <Grid item xs={12}>
             <TextField
               required
+              variant="filled"
               defaultValue={userData.firstName}
               id="firstName"
               name="firstName"
@@ -71,6 +77,7 @@ export default function CustomerUpdateForm({ customer, token }) {
           <Grid item xs={12}>
             <TextField
               required
+              variant="filled"
               defaultValue={userData.lastName}
               id="lastName"
               name="lastName"
@@ -80,18 +87,11 @@ export default function CustomerUpdateForm({ customer, token }) {
             />
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              required
-              defaultValue={userData.phone}
-              id="phone"
-              name="phone"
-              label="Phone"
-              fullWidth
-              onChange={event => handleChange(event)}
-            />
+            <PhoneInput value={userData.phone} onChange={event => handleChangePhone(event)} />
           </Grid>
           <Grid item xs={12}>
             <TextField
+              variant="filled"
               required
               defaultValue={userData.email}
               id="email"
@@ -104,6 +104,7 @@ export default function CustomerUpdateForm({ customer, token }) {
           <Grid item xs={12}>
             <TextField
               required
+              variant="filled"
               id="password"
               name="password"
               type="password"
