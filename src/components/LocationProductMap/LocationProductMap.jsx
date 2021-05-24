@@ -11,7 +11,7 @@ function getModalStyle() {
   return {
     top: `${top}%`,
     left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
+    transform: `translate(-${top}%, -${left}%)`,
   };
 }
 
@@ -72,6 +72,6 @@ export default function LocationProductMap({ position }) {
 
 LocationProductMap.propTypes = {
   position: PropTypes.shape({
-    split: PropTypes.func
-  }).isRequired
+    split: PropTypes.func,
+  }).isRequired,
 };

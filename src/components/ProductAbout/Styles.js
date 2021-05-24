@@ -3,14 +3,14 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(() => ({
   availableForSale: {
     color: '#00a046',
-    backgroundColor: '#f4faf6'
+    backgroundColor: '#f4faf6',
   },
   notAvailableForSale: {
     color: '#f84147',
-    backgroundColor: '#f4faf6'
+    backgroundColor: '#f4faf6',
   },
   main: {
-    padding: '20px'
+    padding: '20px',
   },
   byButton: {
     marginLeft: '30%',
@@ -22,9 +22,9 @@ const useStyles = makeStyles(() => ({
     '&:hover': {
       backgroundColor: '#4F3429',
       borderColor: '#925A41',
-      boxShadow: 'none'
-    }
-  }
+      boxShadow: 'none',
+    },
+  },
 }));
 
 export default useStyles;

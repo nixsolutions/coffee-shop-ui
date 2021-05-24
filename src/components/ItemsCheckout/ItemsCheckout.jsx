@@ -8,7 +8,7 @@ import {
   Typography,
   Badge,
   CardContent,
-  Hidden
+  Hidden,
 } from '@material-ui/core';
 import useStyles from './Styles';
 import noPhotoAvailable from '../../media/noPhotoAvailable.png';
@@ -64,5 +64,5 @@ export default function ItemsCheckout({ data }) {
 }
 
 ItemsCheckout.propTypes = {
-  data: PropTypes.objectOf(Object).isRequired
+  data: PropTypes.objectOf(Object).isRequired,
 };

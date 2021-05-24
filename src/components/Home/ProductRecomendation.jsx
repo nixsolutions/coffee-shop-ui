@@ -45,5 +45,5 @@ export default function ProductRecomendation({ product }) {
 }
 
 ProductRecomendation.propTypes = {
-  product: PropTypes.objectOf(Object).isRequired
+  product: PropTypes.objectOf(Object).isRequired,
 };

@@ -43,11 +43,11 @@ function MenuRender({ anchorEl, isMenuOpen, handleMenuClose, history }) {
 
 MenuRender.propTypes = {
   history: PropTypes.shape({
-    push: PropTypes.func
+    push: PropTypes.func,
   }).isRequired,
   anchorEl: PropTypes.string.isRequired,
   isMenuOpen: PropTypes.bool.isRequired,
-  handleMenuClose: PropTypes.func.isRequired
+  handleMenuClose: PropTypes.func.isRequired,
 };
 
 export default withRouter(MenuRender);

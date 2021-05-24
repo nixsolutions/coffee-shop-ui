@@ -6,14 +6,14 @@ const useStyles = makeStyles(() => ({
     color: '#7E5040',
     backgroundSize: 'cover',
     borderRadius: '0.8125rem',
-    backgroundRepeat: 'no-repeat'
+    backgroundRepeat: 'no-repeat',
   },
   card: {
-    maxWidth: 345
+    maxWidth: 345,
   },
   media: {
-    height: 140
-  }
+    height: 140,
+  },
 }));
 
 export default useStyles;

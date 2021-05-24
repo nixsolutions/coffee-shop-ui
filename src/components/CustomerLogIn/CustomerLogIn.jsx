@@ -33,7 +33,7 @@ function CustomerLogIn({ history }) {
           setCustomerToken(client, customerAccessToken);
           history.push('/');
         }
-      }
+      },
     }
   );
 
@@ -52,26 +52,26 @@ function CustomerLogIn({ history }) {
         <form
           className={classes.form}
           noValidate
-          onSubmit={e => {
+          onSubmit={(e) => {
             e.preventDefault();
             customerAccessTokenCreate({
               variables: {
                 input: {
                   email,
-                  password
-                }
-              }
+                  password,
+                },
+              },
             });
           }}
         >
           {formErrors.length > 0 &&
-            formErrors.map(err => (
+            formErrors.map((err) => (
               <p className={classes.error} key={err.message}>
                 {`*${err.message}`}
               </p>
             ))}
           <TextField
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             variant="outlined"
             margin="normal"
             required
@@ -83,7 +83,7 @@ function CustomerLogIn({ history }) {
             autoFocus
           />
           <TextField
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             variant="outlined"
             margin="normal"
             required
@@ -122,8 +122,8 @@ function CustomerLogIn({ history }) {
 
 CustomerLogIn.propTypes = {
   history: PropTypes.shape({
-    push: PropTypes.func
-  }).isRequired
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 export default withRouter(CustomerLogIn);

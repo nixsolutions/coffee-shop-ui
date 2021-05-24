@@ -10,7 +10,7 @@ import {
   Grid,
   Button,
   FilledInput,
-  Typography
+  Typography,
 } from '@material-ui/core';
 import Spinner from '../Spinner';
 import GET_CUSTOMER from '../CustomerProfile/GraphQl';
@@ -23,7 +23,7 @@ export default function CustomerShippingUpdateForm({ currentAddresses, token }) 
   const [formErrors, setFormErrors] = useState([]);
 
   const [customerAddressUpdate, { loading }] = useMutation(CUSTOMER_ADDRESS_UPDATE, {
-    onCompleted: data => {
+    onCompleted: (data) => {
       if (data.customerAddressUpdate.customerUserErrors.length > 0) {
         setFormErrors(data.customerAddressUpdate.customerUserErrors);
       }
@@ -31,12 +31,12 @@ export default function CustomerShippingUpdateForm({ currentAddresses, token }) 
     refetchQueries: [
       {
         query: GET_CUSTOMER,
-        variables: { customerAccessToken: token, first: 3 }
-      }
-    ]
+        variables: { customerAccessToken: token, first: 3 },
+      },
+    ],
   });
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     event.preventDefault();
     const { value } = event.target;
     const formAddress = find(currentAddresses.edges, ({ node }) => node.id === value).node;
@@ -44,30 +44,21 @@ export default function CustomerShippingUpdateForm({ currentAddresses, token }) 
     setCurrentAddress({ ...currentAddress, ...formAddress });
   };
 
-  const updateFormAddress = event => {
+  const updateFormAddress = (event) => {
     const { value, name } = event.target;
     setCurrentAddress({ ...currentAddress, [name]: value });
   };
 
-  const handleChangePhone = event => {
+  const handleChangePhone = (event) => {
     setCurrentAddress({
       ...currentAddress,
-      ['phone']: event
+      ['phone']: event,
     });
   };
 
   const handleSubmit = () => {
-    const {
-      id,
-      firstName,
-      lastName,
-      phone,
-      zip,
-      province,
-      city,
-      country,
-      address1
-    } = currentAddress;
+    const { id, firstName, lastName, phone, zip, province, city, country, address1 } =
+      currentAddress;
     customerAddressUpdate({
       variables: {
         id,
@@ -80,9 +71,9 @@ export default function CustomerShippingUpdateForm({ currentAddresses, token }) 
           province,
           city,
           country,
-          address1
-        }
-      }
+          address1,
+        },
+      },
     });
   };
 
@@ -90,7 +81,7 @@ export default function CustomerShippingUpdateForm({ currentAddresses, token }) 
 
   return (
     <form
-      onSubmit={e => {
+      onSubmit={(e) => {
         e.preventDefault();
         handleSubmit();
       }}
@@ -98,10 +89,10 @@ export default function CustomerShippingUpdateForm({ currentAddresses, token }) 
       <FormControl fullWidth>
         <InputLabel htmlFor="age-native-helper">Addresses</InputLabel>
         <NativeSelect
-          onChange={event => handleChange(event)}
+          onChange={(event) => handleChange(event)}
           inputProps={{
             name: 'adresses',
-            id: 'adresses-native-helper'
+            id: 'adresses-native-helper',
           }}
         >
           {currentAddresses.edges.map(({ node }) => (
@@ -112,7 +103,7 @@ export default function CustomerShippingUpdateForm({ currentAddresses, token }) 
         </NativeSelect>
         <FormHelperText>Some important helper text</FormHelperText>
       </FormControl>
-      {formErrors.map(err => (
+      {formErrors.map((err) => (
         <Typography color="error" key={err.message}>
           {`*${err.message}`}
         </Typography>
@@ -197,7 +188,7 @@ export default function CustomerShippingUpdateForm({ currentAddresses, token }) 
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <PhoneInput value={currentAddress.phone} onChange={event => handleChangePhone(event)} />
+          <PhoneInput value={currentAddress.phone} onChange={(event) => handleChangePhone(event)} />
         </Grid>
         <Grid item xs={12}>
           <Button fullWidth variant="contained" color="primary" type="submit">
@@ -211,5 +202,5 @@ export default function CustomerShippingUpdateForm({ currentAddresses, token }) 
 
 CustomerShippingUpdateForm.propTypes = {
   currentAddresses: PropTypes.objectOf(Object).isRequired,
-  token: PropTypes.string.isRequired
+  token: PropTypes.string.isRequired,
 };

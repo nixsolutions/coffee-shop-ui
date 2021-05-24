@@ -32,5 +32,5 @@ export default function ImageSlider({ images }) {
 }
 
 ImageSlider.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.object).isRequired
+  images: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

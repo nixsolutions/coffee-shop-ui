@@ -12,14 +12,18 @@ export default function Order({ match: { params } }) {
   const [lineItems, setLineItems] = useState({});
   const classes = useStyles();
   const { id } = params;
-  const { data: { node } = {}, loading, refetch } = useQuery(GET_ORDER, {
+  const {
+    data: { node } = {},
+    loading,
+    refetch,
+  } = useQuery(GET_ORDER, {
     variables: {
-      id
+      id,
     },
     fetchPolicy: 'cache-and-network',
     onCompleted: () => {
       setLineItems(node.order.lineItems);
-    }
+    },
   });
 
   if (loading) return <Spinner />;
@@ -61,6 +65,6 @@ export default function Order({ match: { params } }) {
 }
 Order.propTypes = {
   match: PropTypes.shape({
-    params: PropTypes.object
-  }).isRequired
+    params: PropTypes.object,
+  }).isRequired,
 };

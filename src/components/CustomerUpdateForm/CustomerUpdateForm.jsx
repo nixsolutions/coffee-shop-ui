@@ -19,43 +19,43 @@ export default function CustomerUpdateForm({ customer, token }) {
       } else {
         setCustomerToken(client, customerAccessToken);
       }
-    }
+    },
   });
   const { firstName, lastName, email, phone } = customer;
   const [userData, setUserData] = useState({
     firstName,
     lastName,
     email,
-    phone
+    phone,
   });
 
   const updateCustomerInfo = () => {
     customerUpdate({
       variables: {
         customerAccessToken: token,
-        customer: userData
-      }
+        customer: userData,
+      },
     });
   };
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     const { value, name } = event.target;
     setUserData({
       ...userData,
-      [name]: value
+      [name]: value,
     });
   };
-  const handleChangePhone = event => {
+  const handleChangePhone = (event) => {
     setUserData({
       ...userData,
-      ['phone']: event
+      ['phone']: event,
     });
   };
   if (loading) return <Spinner />;
 
   return (
     <div className={classes.formWrapper}>
-      {formErrors.map(err => (
+      {formErrors.map((err) => (
         <Typography color="error" key={err.message}>
           {`*${err.message}`}
         </Typography>
@@ -71,7 +71,7 @@ export default function CustomerUpdateForm({ customer, token }) {
               name="firstName"
               label="First name"
               fullWidth
-              onChange={event => handleChange(event)}
+              onChange={(event) => handleChange(event)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -83,11 +83,11 @@ export default function CustomerUpdateForm({ customer, token }) {
               name="lastName"
               label="Last name"
               fullWidth
-              onChange={event => handleChange(event)}
+              onChange={(event) => handleChange(event)}
             />
           </Grid>
           <Grid item xs={12}>
-            <PhoneInput value={userData.phone} onChange={event => handleChangePhone(event)} />
+            <PhoneInput value={userData.phone} onChange={(event) => handleChangePhone(event)} />
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -98,7 +98,7 @@ export default function CustomerUpdateForm({ customer, token }) {
               name="email"
               label="Email"
               fullWidth
-              onChange={event => handleChange(event)}
+              onChange={(event) => handleChange(event)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -110,7 +110,7 @@ export default function CustomerUpdateForm({ customer, token }) {
               type="password"
               label="Password"
               fullWidth
-              onChange={event => handleChange(event)}
+              onChange={(event) => handleChange(event)}
             />
           </Grid>
         </Grid>
@@ -129,5 +129,5 @@ export default function CustomerUpdateForm({ customer, token }) {
 
 CustomerUpdateForm.propTypes = {
   customer: PropTypes.objectOf(Object).isRequired,
-  token: PropTypes.string.isRequired
+  token: PropTypes.string.isRequired,
 };

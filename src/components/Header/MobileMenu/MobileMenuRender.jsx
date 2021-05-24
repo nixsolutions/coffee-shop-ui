@@ -13,7 +13,7 @@ export default function MobileMenuRender({
   handleMobileMenuClose,
   client,
   handleProfileMenuOpen,
-  bucketItemsCount
+  bucketItemsCount,
 }) {
   return (
     <Menu
@@ -54,5 +54,5 @@ MobileMenuRender.propTypes = {
   handleMobileMenuClose: PropTypes.func.isRequired,
   handleProfileMenuOpen: PropTypes.func.isRequired,
   client: PropTypes.objectOf.isRequired,
-  bucketItemsCount: PropTypes.number.isRequired
+  bucketItemsCount: PropTypes.number.isRequired,
 };

@@ -12,13 +12,13 @@ import {
   InputLabel,
   MenuItem,
   FormControl,
-  Select
+  Select,
 } from '@material-ui/core';
 import useStyles from './Styles';
 
 export default function CustomerOrderList({ orders, refetch, setStep, step }) {
   const classes = useStyles();
-  const onRefetch = event => {
+  const onRefetch = (event) => {
     setStep(event.target.value);
     refetch();
   };
@@ -30,7 +30,7 @@ export default function CustomerOrderList({ orders, refetch, setStep, step }) {
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={step}
-          onChange={event => onRefetch(event)}
+          onChange={(event) => onRefetch(event)}
         >
           <MenuItem value={3}>3</MenuItem>
           <MenuItem value={5}>5</MenuItem>
@@ -96,5 +96,5 @@ CustomerOrderList.propTypes = {
   orders: PropTypes.objectOf(Object).isRequired,
   refetch: PropTypes.func.isRequired,
   setStep: PropTypes.func.isRequired,
-  step: PropTypes.number.isRequired
+  step: PropTypes.number.isRequired,
 };

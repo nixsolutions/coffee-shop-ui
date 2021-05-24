@@ -12,7 +12,7 @@ import {
   MenuItem,
   Button,
   ButtonGroup,
-  Divider
+  Divider,
 } from '@material-ui/core/';
 import useStyles from './Styles';
 import { GET_PRODUCTS_HOME, GET_SEARCH_RESULT } from './GraphQl';
@@ -23,14 +23,14 @@ import SearchResult from '../SearchResult';
 function Home() {
   const [result, setResult] = useState(null);
   const [query, setQuery] = useState(null);
-  const [sortKey, setSortKey] = useState(null);
+  const [sortKey, setSortKey] = useState('TITLE');
   const { data, loading } = useQuery(GET_PRODUCTS_HOME);
   const [search, { data: { products } = {}, loading: searchLoading, called }] = useLazyQuery(
     GET_SEARCH_RESULT,
     {
       onCompleted: () => {
         setResult(products);
-      }
+      },
     }
   );
   const classes = useStyles();
@@ -46,8 +46,8 @@ function Home() {
       variables: {
         query: `title=${query}`,
         sortKey: reverseSortKey[0],
-        reverse: isReverse
-      }
+        reverse: isReverse,
+      },
     });
   };
 
@@ -71,7 +71,7 @@ function Home() {
     <div className={classes.greetingUnit}>
       <div className={classes.search}>
         <form
-          onSubmit={e => {
+          onSubmit={(e) => {
             e.preventDefault();
             onSearch();
           }}
@@ -83,7 +83,7 @@ function Home() {
                 <Select
                   labelId="select-label"
                   id="dselect"
-                  onChange={e => setSortKey(e.target.value)}
+                  onChange={(e) => setSortKey(e.target.value)}
                 >
                   <MenuItem value={'TITLE'}>Title A-Z</MenuItem>
                   <MenuItem value={'TITLE,true'}>Title Z-A</MenuItem>
@@ -99,7 +99,7 @@ function Home() {
                 <Input
                   id="input-with-icon"
                   className={classes.searchInput}
-                  onChange={e => setQuery(e.target.value)}
+                  onChange={(e) => setQuery(e.target.value)}
                   startAdornment={
                     <InputAdornment position="start">
                       <SearchIcon />

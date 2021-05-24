@@ -14,8 +14,8 @@ export default function ShippingLineForm({ nextStep, checkoutData }) {
 
   const { data: { node } = {}, loading: queryLoading } = useQuery(GET_CHECKOUT_SHIPPING_RATE, {
     variables: {
-      id: checkoutId
-    }
+      id: checkoutId,
+    },
   });
   const [checkoutShippingLineUpdate, { loading: mutationLoading }] = useMutation(
     UPDATE_SHIPPING_LINE,
@@ -23,12 +23,12 @@ export default function ShippingLineForm({ nextStep, checkoutData }) {
       refetchQueries: [
         {
           query: GET_CHECKOUT_ITEMS,
-          variables: { id: checkoutId }
-        }
+          variables: { id: checkoutId },
+        },
       ],
       onCompleted: () => {
         nextStep();
-      }
+      },
     }
   );
 
@@ -36,8 +36,8 @@ export default function ShippingLineForm({ nextStep, checkoutData }) {
     checkoutShippingLineUpdate({
       variables: {
         checkoutId,
-        shippingRateHandle: shipping
-      }
+        shippingRateHandle: shipping,
+      },
     });
   };
 
@@ -48,13 +48,13 @@ export default function ShippingLineForm({ nextStep, checkoutData }) {
       <Typography variant="h4" align="center">
         Available Shipping Rates
       </Typography>
-      {node.availableShippingRates.shippingRates.map(variant => (
+      {node.availableShippingRates.shippingRates.map((variant) => (
         <FormControlLabel
           key={variant.title}
           value={variant.handle}
           control={<Radio color="primary" />}
           label={variant.title}
-          onChange={e => setShipping(e.target.value)}
+          onChange={(e) => setShipping(e.target.value)}
         />
       ))}
       <Button
@@ -73,5 +73,5 @@ export default function ShippingLineForm({ nextStep, checkoutData }) {
 
 ShippingLineForm.propTypes = {
   nextStep: PropTypes.func.isRequired,
-  checkoutData: PropTypes.objectOf(Object).isRequired
+  checkoutData: PropTypes.objectOf(Object).isRequired,
 };

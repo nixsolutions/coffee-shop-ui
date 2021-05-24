@@ -12,8 +12,8 @@ export default function Product({ match: { params } }) {
   const { slug } = params;
   const { data: { node } = {}, loading } = useQuery(GET_PRODUCT, {
     variables: {
-      id: slug
-    }
+      id: slug,
+    },
   });
 
   if (loading) return <Spinner />;
@@ -37,6 +37,6 @@ export default function Product({ match: { params } }) {
 
 Product.propTypes = {
   match: PropTypes.shape({
-    params: PropTypes.object
-  }).isRequired
+    params: PropTypes.object,
+  }).isRequired,
 };

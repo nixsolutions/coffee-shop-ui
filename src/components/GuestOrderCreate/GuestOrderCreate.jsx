@@ -17,8 +17,8 @@ function GuestOrderCreate({ match: { params }, history }) {
 
   const { data, loading } = useQuery(GET_CHECKOUT_ITEMS, {
     variables: {
-      id: checkoutId
-    }
+      id: checkoutId,
+    },
   });
 
   const [checkoutCompleteFree, { loading: loadCheckoutComplete }] = useMutation(
@@ -35,17 +35,17 @@ function GuestOrderCreate({ match: { params }, history }) {
       refetchQueries: [
         {
           query: GET_CHECKOUT_ITEMS,
-          variables: { id: checkoutId }
-        }
-      ]
+          variables: { id: checkoutId },
+        },
+      ],
     }
   );
 
   const completeFree = () => {
     checkoutCompleteFree({
       variables: {
-        checkoutId
-      }
+        checkoutId,
+      },
     });
   };
 
@@ -88,7 +88,7 @@ function GuestOrderCreate({ match: { params }, history }) {
             </Typography>
           </Button>
           {errors.length > 0 &&
-            errors.map(err => (
+            errors.map((err) => (
               <Typography className={classes.error} key={err.message}>
                 {`*${err.message}`}
               </Typography>
@@ -101,9 +101,9 @@ function GuestOrderCreate({ match: { params }, history }) {
 
 GuestOrderCreate.propTypes = {
   history: PropTypes.shape({
-    push: PropTypes.func
+    push: PropTypes.func,
   }).isRequired,
-  match: PropTypes.objectOf(Object).isRequired
+  match: PropTypes.objectOf(Object).isRequired,
 };
 
 export default withRouter(GuestOrderCreate);

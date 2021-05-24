@@ -19,20 +19,20 @@ export default function ProductAbout({ node }) {
   const classes = useStyles();
   const { data: { checkoutId } = {} } = useQuery(GET_CHECKOUT_ID);
   const [checkoutCreate, { loading: checkoutCreateLoad, client }] = useMutation(CREATE_CHECKOUT, {
-    onCompleted: data => {
+    onCompleted: (data) => {
       const cartItems = data.checkoutCreate.checkout.lineItems.edges.map(({ node }) => ({
         variantId: node.variant.id,
-        quantity: node.quantity
+        quantity: node.quantity,
       }));
       store.set('checkoutId', data.checkoutCreate.checkout.id);
       store.set('cartItems', cartItems);
       client.writeData({
         data: {
-          bucketItemsCount: sumBy(store.get('cartItems'), node => node.quantity),
-          checkoutId: data.checkoutCreate.checkout.id
-        }
+          bucketItemsCount: sumBy(store.get('cartItems'), (node) => node.quantity),
+          checkoutId: data.checkoutCreate.checkout.id,
+        },
       });
-    }
+    },
   });
   const [checkoutLineItemsReplace, { loading: checkoutReplaceLoad }] = useMutation(
     CHECKOUT_LINE_ITEMS_REPLACE,
@@ -40,17 +40,17 @@ export default function ProductAbout({ node }) {
       refetchQueries: [
         {
           query: GET_CHECKOUT_ITEMS,
-          variables: { id: store.get('checkoutId') }
-        }
+          variables: { id: store.get('checkoutId') },
+        },
       ],
-      onCompleted: data => {
+      onCompleted: (data) => {
         checkoutResolver(data, client);
-      }
+      },
     }
   );
   const addToCart = (id, count) => {
     const existingItemsCart = store.get('cartItems') || [];
-    const existingItem = existingItemsCart.find(item => item.variantId === id);
+    const existingItem = existingItemsCart.find((item) => item.variantId === id);
     if (existingItem) {
       existingItem.quantity += count;
     } else {
@@ -60,16 +60,16 @@ export default function ProductAbout({ node }) {
       checkoutCreate({
         variables: {
           input: {
-            lineItems: existingItemsCart
-          }
-        }
+            lineItems: existingItemsCart,
+          },
+        },
       });
     } else {
       checkoutLineItemsReplace({
         variables: {
           checkoutId,
-          lineItems: existingItemsCart
-        }
+          lineItems: existingItemsCart,
+        },
       });
     }
   };
@@ -125,5 +125,5 @@ export default function ProductAbout({ node }) {
 }
 
 ProductAbout.propTypes = {
-  node: PropTypes.objectOf(Object).isRequired
+  node: PropTypes.objectOf(Object).isRequired,
 };

@@ -31,13 +31,13 @@ function TabPanel(props) {
 TabPanel.propTypes = {
   children: PropTypes.node.isRequired,
   index: PropTypes.string.isRequired,
-  value: PropTypes.number.isRequired
+  value: PropTypes.number.isRequired,
 };
 
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`
+    'aria-controls': `simple-tabpanel-${index}`,
   };
 }
 
@@ -47,8 +47,12 @@ export default function CustomerProfile() {
   const [value, setValue] = useState(0);
   const [step, setStep] = useState(3);
 
-  const { data: { customer } = {}, loading, refetch } = useQuery(GET_CUSTOMER, {
-    variables: { customerAccessToken: token, first: step }
+  const {
+    data: { customer } = {},
+    loading,
+    refetch,
+  } = useQuery(GET_CUSTOMER, {
+    variables: { customerAccessToken: token, first: step },
   });
 
   const handleChange = (event, newValue) => {

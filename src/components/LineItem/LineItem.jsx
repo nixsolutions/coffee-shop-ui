@@ -24,7 +24,7 @@ export default function LineItem({ product, cartItemsQuery }) {
   const classes = useStyles();
 
   const {
-    data: { checkoutId }
+    data: { checkoutId },
   } = useQuery(GET_CHECKOUT_ID);
   const [checkoutLineItemsReplace, { loading: checkoutReplaceLoad, client }] = useMutation(
     CHECKOUT_LINE_ITEMS_REPLACE,
@@ -32,12 +32,12 @@ export default function LineItem({ product, cartItemsQuery }) {
       refetchQueries: [
         {
           query: cartItemsQuery,
-          variables: { id: checkoutId }
-        }
+          variables: { id: checkoutId },
+        },
       ],
-      onCompleted: data => {
+      onCompleted: (data) => {
         checkoutResolver(data, client);
-      }
+      },
     }
   );
 
@@ -76,7 +76,7 @@ export default function LineItem({ product, cartItemsQuery }) {
                   inputProps={{ min: '1' }}
                   defaultValue={product.quantity}
                   className={classes.quantityProduct}
-                  onChange={e =>
+                  onChange={(e) =>
                     updateQuantityProduct(product.variant.id, e, checkoutLineItemsReplace)
                   }
                 />
@@ -101,5 +101,5 @@ export default function LineItem({ product, cartItemsQuery }) {
 
 LineItem.propTypes = {
   product: PropTypes.objectOf(Object).isRequired,
-  cartItemsQuery: PropTypes.objectOf(Object).isRequired
+  cartItemsQuery: PropTypes.objectOf(Object).isRequired,
 };

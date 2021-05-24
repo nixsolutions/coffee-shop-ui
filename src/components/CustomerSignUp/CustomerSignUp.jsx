@@ -39,7 +39,7 @@ function CustomerSignUp({ history }) {
           setCustomerToken(client, customerAccessToken);
           history.push('/');
         }
-      }
+      },
     }
   );
   const [createCustomer, { loading }] = useMutation(CUSTOMER_CREATE, {
@@ -51,12 +51,12 @@ function CustomerSignUp({ history }) {
           variables: {
             input: {
               email: customer.email,
-              password
-            }
-          }
+              password,
+            },
+          },
         });
       }
-    }
+    },
   });
 
   if (loading || loadCreateToken) return <Spinner />;
@@ -74,7 +74,7 @@ function CustomerSignUp({ history }) {
         <form
           className={classes.form}
           noValidate
-          onSubmit={e => {
+          onSubmit={(e) => {
             e.preventDefault();
             createCustomer({
               variables: {
@@ -84,14 +84,14 @@ function CustomerSignUp({ history }) {
                   password,
                   firstName,
                   lastName,
-                  acceptsMarketing
-                }
-              }
+                  acceptsMarketing,
+                },
+              },
             });
           }}
         >
           {formErrors.length > 0 &&
-            formErrors.map(err => (
+            formErrors.map((err) => (
               <p className={classes.error} key={err.message}>
                 {`*${err.message}`}
               </p>
@@ -99,7 +99,7 @@ function CustomerSignUp({ history }) {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                onChange={e => setFirstName(e.target.value)}
+                onChange={(e) => setFirstName(e.target.value)}
                 autoComplete="fname"
                 name="firstName"
                 variant="outlined"
@@ -111,7 +111,7 @@ function CustomerSignUp({ history }) {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                onChange={e => setLastName(e.target.value)}
+                onChange={(e) => setLastName(e.target.value)}
                 variant="outlined"
                 fullWidth
                 id="lastName"
@@ -122,7 +122,7 @@ function CustomerSignUp({ history }) {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                onChange={e => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
                 variant="outlined"
                 required
                 fullWidth
@@ -133,11 +133,11 @@ function CustomerSignUp({ history }) {
               />
             </Grid>
             <Grid item xs={12}>
-              <PhoneInput onChange={e => setPhone(e)} />
+              <PhoneInput onChange={(e) => setPhone(e)} />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 variant="outlined"
                 required
                 fullWidth
@@ -151,7 +151,10 @@ function CustomerSignUp({ history }) {
             <Grid item xs={12}>
               <FormControlLabel
                 control={
-                  <Checkbox color="primary" onChange={e => setAcceptsMarketing(e.target.checked)} />
+                  <Checkbox
+                    color="primary"
+                    onChange={(e) => setAcceptsMarketing(e.target.checked)}
+                  />
                 }
                 label="I want to receive inspiration, marketing promotions and updates via email."
               />
@@ -181,8 +184,8 @@ function CustomerSignUp({ history }) {
 
 CustomerSignUp.propTypes = {
   history: PropTypes.shape({
-    push: PropTypes.func
-  }).isRequired
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 export default withRouter(CustomerSignUp);

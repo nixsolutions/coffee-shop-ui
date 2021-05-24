@@ -5,8 +5,8 @@ const useStyles = makeStyles(() => ({
     width: '400px',
     height: '400px',
     margin: 'auto',
-    backgroundSize: 'cover'
-  }
+    backgroundSize: 'cover',
+  },
 }));
 
 export default useStyles;

@@ -11,7 +11,7 @@ import {
   FormHelperText,
   FormControl,
   Paper,
-  FilledInput
+  FilledInput,
 } from '@material-ui/core';
 import CHECKOUT_SHIPPPING_ADRESS_UPDATE from './GraphQl';
 import { GET_CHECKOUT_ITEMS } from '../Cart/GraphQL';
@@ -40,7 +40,7 @@ export default function ShippingForm({ nextStep, checkoutData, customer }) {
         country: '',
         phone: '',
         province: '',
-        zip: ''
+        zip: '',
       }
   );
 
@@ -49,40 +49,40 @@ export default function ShippingForm({ nextStep, checkoutData, customer }) {
       name: 'firstName',
       label: 'First name',
       value: addressData.firstName,
-      gridSm: 6
+      gridSm: 6,
     },
     {
       name: 'lastName',
       label: 'Last name',
       value: addressData.lastName,
-      gridSm: 6
+      gridSm: 6,
     },
     { name: 'phone', label: 'Phone', value: addressData.phone, gridSm: false },
     {
       name: 'address1',
       label: 'Address line',
       value: addressData.address1,
-      gridSm: false
+      gridSm: false,
     },
     { name: 'city', label: 'City', value: addressData.city, gridSm: 6 },
     {
       name: 'province',
       label: 'State/Province/Region',
       value: addressData.province,
-      gridSm: 6
+      gridSm: 6,
     },
     {
       name: 'zip',
       label: 'Zip / Postal code',
       value: addressData.zip,
-      gridSm: 6
+      gridSm: 6,
     },
-    { name: 'country', label: 'Country', value: addressData.country, gridSm: 6 }
+    { name: 'country', label: 'Country', value: addressData.country, gridSm: 6 },
   ];
   const [checkoutShippingAddressUpdateV2, { loading }] = useMutation(
     CHECKOUT_SHIPPPING_ADRESS_UPDATE,
     {
-      onCompleted: data => {
+      onCompleted: (data) => {
         if (data.checkoutShippingAddressUpdateV2.checkoutUserErrors.length > 0) {
           setFormErrors(data.checkoutShippingAddressUpdateV2.checkoutUserErrors);
         } else {
@@ -92,20 +92,20 @@ export default function ShippingForm({ nextStep, checkoutData, customer }) {
       refetchQueries: [
         {
           query: GET_CHECKOUT_ITEMS,
-          variables: { id: checkoutId }
-        }
-      ]
+          variables: { id: checkoutId },
+        },
+      ],
     }
   );
-  const handleChange = event => {
+  const handleChange = (event) => {
     const { value, name } = event.target;
     setAddressData({
       ...addressData,
-      [name]: value
+      [name]: value,
     });
   };
 
-  const handleChangeAddress = event => {
+  const handleChangeAddress = (event) => {
     event.preventDefault();
     const { value } = event.target;
     const formAddress = find(
@@ -128,16 +128,16 @@ export default function ShippingForm({ nextStep, checkoutData, customer }) {
           lastName,
           phone,
           province,
-          zip
-        }
-      }
+          zip,
+        },
+      },
     });
   };
 
   if (loading) return <Spinner />;
   return (
     <form
-      onSubmit={e => {
+      onSubmit={(e) => {
         e.preventDefault();
         updateShippingCheckout();
       }}
@@ -145,7 +145,7 @@ export default function ShippingForm({ nextStep, checkoutData, customer }) {
       <Typography variant="h4" gutterBottom align="center">
         Shipping address
       </Typography>
-      {formErrors.map(err => (
+      {formErrors.map((err) => (
         <Typography color="error" key={err.message}>
           {`*${err.message}`}
         </Typography>
@@ -155,10 +155,10 @@ export default function ShippingForm({ nextStep, checkoutData, customer }) {
           <FormControl fullWidth>
             <InputLabel htmlFor="age-native-helper">Addresses</InputLabel>
             <NativeSelect
-              onChange={event => handleChangeAddress(event)}
+              onChange={(event) => handleChangeAddress(event)}
               inputProps={{
                 name: 'adresses',
-                id: 'adresses-native-helper'
+                id: 'adresses-native-helper',
               }}
             >
               {customer.data.customer.addresses.edges.map(({ node }) => (
@@ -172,7 +172,7 @@ export default function ShippingForm({ nextStep, checkoutData, customer }) {
         </Paper>
       ) : null}
       <Grid container spacing={3} className={classes.formContainer}>
-        {textFieldsParams.map(field => (
+        {textFieldsParams.map((field) => (
           <Grid item xs={12} sm={field.gridSm} key={field.name}>
             <FormControl variant="filled" fullWidth>
               <InputLabel htmlFor="phoneUpdate">{field.label}</InputLabel>
@@ -181,7 +181,7 @@ export default function ShippingForm({ nextStep, checkoutData, customer }) {
                 name={field.name}
                 value={field.value}
                 fullWidth
-                onChange={event => handleChange(event)}
+                onChange={(event) => handleChange(event)}
               />
             </FormControl>
           </Grid>
@@ -199,5 +199,5 @@ export default function ShippingForm({ nextStep, checkoutData, customer }) {
 ShippingForm.propTypes = {
   checkoutData: PropTypes.objectOf(Object).isRequired,
   customer: PropTypes.objectOf(Object).isRequired,
-  nextStep: PropTypes.func.isRequired
+  nextStep: PropTypes.func.isRequired,
 };

@@ -41,10 +41,10 @@ function SplitButtonCheckout({ history, dropCart }) {
   };
 
   const handleToggle = () => {
-    setOpen(prevOpen => !prevOpen);
+    setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = event => {
+  const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -73,7 +73,7 @@ function SplitButtonCheckout({ history, dropCart }) {
             <Grow
               {...TransitionProps}
               style={{
-                transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'
+                transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
               }}
             >
               <Paper>
@@ -84,7 +84,7 @@ function SplitButtonCheckout({ history, dropCart }) {
                         key={option}
                         disabled={index === 2}
                         selected={index === selectedIndex}
-                        onClick={event => handleMenuItemClick(event, index)}
+                        onClick={(event) => handleMenuItemClick(event, index)}
                       >
                         {option}
                       </MenuItem>
@@ -102,9 +102,9 @@ function SplitButtonCheckout({ history, dropCart }) {
 
 SplitButtonCheckout.propTypes = {
   history: PropTypes.shape({
-    push: PropTypes.func
+    push: PropTypes.func,
   }).isRequired,
-  dropCart: PropTypes.func.isRequired
+  dropCart: PropTypes.func.isRequired,
 };
 
 export default withRouter(SplitButtonCheckout);

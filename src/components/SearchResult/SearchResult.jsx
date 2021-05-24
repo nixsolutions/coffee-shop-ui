@@ -68,5 +68,5 @@ export default function SearchResult({ products, searchLoading, called }) {
 SearchResult.propTypes = {
   products: PropTypes.objectOf(Object).isRequired,
   searchLoading: PropTypes.bool.isRequired,
-  called: PropTypes.bool.isRequired
+  called: PropTypes.bool.isRequired,
 };

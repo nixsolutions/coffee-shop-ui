@@ -2,21 +2,21 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   card: {
-    display: 'flex'
+    display: 'flex',
   },
   cardDetails: {
-    flex: 1
+    flex: 1,
   },
   cardMedia: {
-    width: 160
+    width: 160,
   },
   orderInfo: {
     padding: '10px',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   error: {
-    color: 'red'
-  }
+    color: 'red',
+  },
 });
 
 export default useStyles;

@@ -4,14 +4,14 @@ const useStyles = makeStyles({
   card: {
     display: 'flex',
     padding: '10px',
-    marginTop: '15px'
+    marginTop: '15px',
   },
   cardDetails: {
-    flex: 1
+    flex: 1,
   },
   cardMedia: {
-    width: 160
-  }
+    width: 160,
+  },
 });
 
 export default useStyles;

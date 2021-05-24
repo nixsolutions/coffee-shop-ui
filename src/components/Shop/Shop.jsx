@@ -23,7 +23,7 @@ import {
   GET_PRODUCTS,
   CREATE_CHECKOUT,
   GET_CHECKOUT_ID,
-  CHECKOUT_LINE_ITEMS_REPLACE
+  CHECKOUT_LINE_ITEMS_REPLACE,
 } from './GraphQl';
 import { GET_CHECKOUT_ITEMS } from '../Cart/GraphQL';
 import checkoutResolver from '../../helpers/checkoutResolver';
@@ -36,41 +36,41 @@ export default function Shop() {
   const [lastPage, setLastPage] = useState(false);
   const [itemsPerPage] = useState(5);
   const {
-    data: { checkoutId }
+    data: { checkoutId },
   } = useQuery(GET_CHECKOUT_ID);
   const { loading, fetchMore } = useQuery(GET_PRODUCTS, {
     variables: {
-      first: itemsPerPage
+      first: itemsPerPage,
     },
-    onCompleted: data => {
+    onCompleted: (data) => {
       setListProducts(data.products);
       setLastCursor(last(data.products.edges).cursor);
       setLastPage(!data.products.pageInfo.hasNextPage);
-    }
+    },
   });
   const [getOrderedProduct, { loading: loadingOrderProduct }] = useLazyQuery(GET_PRODUCTS, {
-    onCompleted: data => {
+    onCompleted: (data) => {
       setListProducts(data.products);
       setLastCursor(last(data.products.edges).cursor);
       setLastPage(!data.products.pageInfo.hasNextPage);
-    }
+    },
   });
 
   const [checkoutCreate, { loading: checkoutCreateLoad, client }] = useMutation(CREATE_CHECKOUT, {
-    onCompleted: data => {
+    onCompleted: (data) => {
       const cartItems = data.checkoutCreate.checkout.lineItems.edges.map(({ node }) => ({
         variantId: node.variant.id,
-        quantity: node.quantity
+        quantity: node.quantity,
       }));
       store.set('checkoutId', data.checkoutCreate.checkout.id);
       store.set('cartItems', cartItems);
       client.writeData({
         data: {
-          bucketItemsCount: sumBy(store.get('cartItems'), node => node.quantity),
-          checkoutId: data.checkoutCreate.checkout.id
-        }
+          bucketItemsCount: sumBy(store.get('cartItems'), (node) => node.quantity),
+          checkoutId: data.checkoutCreate.checkout.id,
+        },
       });
-    }
+    },
   });
   const [checkoutLineItemsReplace, { loading: checkoutReplaceLoad }] = useMutation(
     CHECKOUT_LINE_ITEMS_REPLACE,
@@ -78,18 +78,18 @@ export default function Shop() {
       refetchQueries: [
         {
           query: GET_CHECKOUT_ITEMS,
-          variables: { id: store.get('checkoutId') }
-        }
+          variables: { id: store.get('checkoutId') },
+        },
       ],
-      onCompleted: data => {
+      onCompleted: (data) => {
         checkoutResolver(data, client);
-      }
+      },
     }
   );
 
   const addToCart = (id, count) => {
     const existingItemsCart = store.get('cartItems') || [];
-    const existingItem = existingItemsCart.find(item => item.variantId === id);
+    const existingItem = existingItemsCart.find((item) => item.variantId === id);
     if (existingItem) {
       existingItem.quantity += count;
     } else {
@@ -99,16 +99,16 @@ export default function Shop() {
       checkoutCreate({
         variables: {
           input: {
-            lineItems: existingItemsCart
-          }
-        }
+            lineItems: existingItemsCart,
+          },
+        },
       });
     } else {
       checkoutLineItemsReplace({
         variables: {
           checkoutId,
-          lineItems: existingItemsCart
-        }
+          lineItems: existingItemsCart,
+        },
       });
     }
   };
@@ -116,7 +116,7 @@ export default function Shop() {
   const onLoadMore = () => {
     fetchMore({
       variables: {
-        after: lastCursor
+        after: lastCursor,
       },
       updateQuery: (prev, { fetchMoreResult }) => {
         if (!fetchMoreResult || fetchMoreResult.products.edges.length < 0) return listProducts;
@@ -126,21 +126,21 @@ export default function Shop() {
         setLastCursor(last(fetchMoreResult.products.edges).cursor);
         setListProducts(
           Object.assign({}, listProducts, {
-            edges: uniqBy([...listProducts.edges, ...fetchMoreResult.products.edges], 'cursor')
+            edges: uniqBy([...listProducts.edges, ...fetchMoreResult.products.edges], 'cursor'),
           })
         );
-      }
+      },
     });
   };
 
-  const changeOrder = value => {
+  const changeOrder = (value) => {
     const isSimple = value.split(',').length === 1;
     if (isSimple) {
       getOrderedProduct({ variables: { first: itemsPerPage, sortKey: value } });
     } else {
       const currentSortKey = first(value.split(','));
       getOrderedProduct({
-        variables: { first: itemsPerPage, sortKey: currentSortKey, reverse: true }
+        variables: { first: itemsPerPage, sortKey: currentSortKey, reverse: true },
       });
     }
   };
@@ -151,7 +151,7 @@ export default function Shop() {
       <Grid item xs={12}>
         <FormControl fullWidth>
           <InputLabel id="select-label">Sort by</InputLabel>
-          <Select labelId="select-label" id="dselect" onChange={e => changeOrder(e.target.value)}>
+          <Select labelId="select-label" id="dselect" onChange={(e) => changeOrder(e.target.value)}>
             <MenuItem value={'TITLE'}>Title A-Z</MenuItem>
             <MenuItem value={'TITLE,true'}>Title Z-A</MenuItem>
             <MenuItem value={'PRICE'}>Price (lowest first)</MenuItem>

@@ -30,7 +30,7 @@ export default function Cart() {
       } else {
         setCartItems(null);
       }
-    }
+    },
   });
   const [checkoutLineItemsReplace, { loading: checkoutReplaceLoad }] = useMutation(
     CHECKOUT_LINE_ITEMS_REPLACE,
@@ -41,13 +41,13 @@ export default function Cart() {
       refetchQueries: [
         {
           query: GET_CHECKOUT_ITEMS,
-          variables: { id: checkoutId }
-        }
-      ]
+          variables: { id: checkoutId },
+        },
+      ],
     }
   );
 
-  const toggleDrawer = open => event => {
+  const toggleDrawer = (open) => (event) => {
     if (event && event.currentTarget.id === 'cart') {
       return;
     }
@@ -66,8 +66,8 @@ export default function Cart() {
     checkoutLineItemsReplace({
       variables: {
         checkoutId,
-        lineItems: []
-      }
+        lineItems: [],
+      },
     });
     store.set('cartItems', []);
   };

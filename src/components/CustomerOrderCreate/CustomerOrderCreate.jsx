@@ -18,13 +18,13 @@ export default function CustomerOrderCreate({ match: { params }, history }) {
   const [errors, setErrors] = useState([]);
   const { data, loading } = useQuery(GET_CUSTOMER, {
     variables: {
-      customerAccessToken: customerToken
-    }
+      customerAccessToken: customerToken,
+    },
   });
   const { data: { node } = {}, loading: getItemsLoad } = useQuery(GET_CHECKOUT_ITEMS, {
     variables: {
-      id: cartId
-    }
+      id: cartId,
+    },
   });
 
   const [checkoutCompleteFree, { loading: loadCheckoutComplete }] = useMutation(
@@ -41,17 +41,17 @@ export default function CustomerOrderCreate({ match: { params }, history }) {
       refetchQueries: [
         {
           query: GET_CHECKOUT_ITEMS,
-          variables: { id: cartId }
-        }
-      ]
+          variables: { id: cartId },
+        },
+      ],
     }
   );
 
   const completeFree = () => {
     checkoutCompleteFree({
       variables: {
-        checkoutId: cartId
-      }
+        checkoutId: cartId,
+      },
     });
   };
 
@@ -93,7 +93,7 @@ export default function CustomerOrderCreate({ match: { params }, history }) {
               Confirm and pay
             </Typography>
           </Button>
-          {errors.map(err => (
+          {errors.map((err) => (
             <Typography color="error" key={err.message}>
               {`*${err.message}`}
             </Typography>
@@ -106,7 +106,7 @@ export default function CustomerOrderCreate({ match: { params }, history }) {
 
 CustomerOrderCreate.propTypes = {
   history: PropTypes.shape({
-    push: PropTypes.func
+    push: PropTypes.func,
   }).isRequired,
-  match: PropTypes.objectOf(Object).isRequired
+  match: PropTypes.objectOf(Object).isRequired,
 };

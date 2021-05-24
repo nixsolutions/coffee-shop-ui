@@ -23,11 +23,11 @@ export default function StepperCompletedCheckout({ data, customerData }) {
     }
   };
   const handleNext = () => {
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
-    setActiveStep(prevActiveStep => prevActiveStep - 1);
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
   function getSteps() {
@@ -88,5 +88,5 @@ export default function StepperCompletedCheckout({ data, customerData }) {
 
 StepperCompletedCheckout.propTypes = {
   data: PropTypes.objectOf(Object).isRequired,
-  customerData: PropTypes.objectOf(Object).isRequired
+  customerData: PropTypes.objectOf(Object).isRequired,
 };

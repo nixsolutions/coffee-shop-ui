@@ -5,8 +5,8 @@ const useStyles = makeStyles({
     height: '100%',
     margin: '0px',
     padding: '0px',
-    backgroundColor: 'red'
-  }
+    backgroundColor: 'red',
+  },
 });
 
 export default useStyles;

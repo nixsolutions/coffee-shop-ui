@@ -2,23 +2,23 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
   list: {
-    width: 400
+    width: 400,
   },
   fullList: {
-    width: 'auto'
+    width: 'auto',
   },
   emptyCart: {
     marginTop: '20px',
     fontSize: '70px',
-    color: '#34495E'
+    color: '#34495E',
   },
   checkoutButton: {
     backgroundColor: '#91F3F6',
-    marginTop: '10px'
+    marginTop: '10px',
   },
   empty: {
-    width: 400
-  }
+    width: 400,
+  },
 });
 
 export default useStyles;

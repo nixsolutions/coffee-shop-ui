@@ -19,33 +19,33 @@ export default function CustomerShippingCreateForm() {
     {
       name: 'firstName',
       label: 'First name',
-      gridSm: 6
+      gridSm: 6,
     },
     {
       name: 'lastName',
       label: 'Last name',
-      gridSm: 6
+      gridSm: 6,
     },
     {
       name: 'address1',
       label: 'Address line',
-      gridSm: false
+      gridSm: false,
     },
     { name: 'city', label: 'City', gridSm: 6 },
     {
       name: 'province',
       label: 'State/Province/Region',
-      gridSm: 6
+      gridSm: 6,
     },
     {
       name: 'zip',
       label: 'Zip / Postal code',
-      gridSm: 6
+      gridSm: 6,
     },
-    { name: 'country', label: 'Country', gridSm: 6 }
+    { name: 'country', label: 'Country', gridSm: 6 },
   ];
   const [customerAddressCreate, { loading }] = useMutation(CUSTOMER_ADDRESS_CREATE, {
-    onCompleted: data => {
+    onCompleted: (data) => {
       if (data.customerAddressCreate.customerUserErrors.length > 0) {
         setFormErrors(data.customerAddressCreate.customerUserErrors);
       }
@@ -53,22 +53,22 @@ export default function CustomerShippingCreateForm() {
     refetchQueries: [
       {
         query: GET_CUSTOMER,
-        variables: { customerAccessToken: token, first: 3 }
-      }
-    ]
+        variables: { customerAccessToken: token, first: 3 },
+      },
+    ],
   });
-  const handleChange = event => {
+  const handleChange = (event) => {
     const { value, name } = event.target;
     setShippingData({
       ...shippingData,
-      [name]: value
+      [name]: value,
     });
   };
 
-  const handleChangePhone = event => {
+  const handleChangePhone = (event) => {
     setShippingData({
       ...shippingData,
-      ['phone']: event
+      ['phone']: event,
     });
   };
 
@@ -76,8 +76,8 @@ export default function CustomerShippingCreateForm() {
     customerAddressCreate({
       variables: {
         customerAccessToken: token,
-        address: shippingData
-      }
+        address: shippingData,
+      },
     });
   };
 
@@ -85,18 +85,18 @@ export default function CustomerShippingCreateForm() {
 
   return (
     <form
-      onSubmit={e => {
+      onSubmit={(e) => {
         e.preventDefault();
         createShippingCustomer();
       }}
     >
-      {formErrors.map(err => (
+      {formErrors.map((err) => (
         <Typography color="error" key={err.message}>
           {`*${err.message}`}
         </Typography>
       ))}
       <Grid container spacing={3} className={classes.formContainer}>
-        {textFieldsParams.map(field => (
+        {textFieldsParams.map((field) => (
           <Grid item xs={12} sm={field.gridSm} key={field.name}>
             <TextField
               required
@@ -105,12 +105,12 @@ export default function CustomerShippingCreateForm() {
               name={field.name}
               label={field.label}
               fullWidth
-              onChange={event => handleChange(event)}
+              onChange={(event) => handleChange(event)}
             />
           </Grid>
         ))}
         <Grid item xs={12}>
-          <PhoneInput onChange={event => handleChangePhone(event)} />
+          <PhoneInput onChange={(event) => handleChangePhone(event)} />
         </Grid>
         <Grid item xs={12}>
           <Button fullWidth variant="contained" color="primary" type="submit">

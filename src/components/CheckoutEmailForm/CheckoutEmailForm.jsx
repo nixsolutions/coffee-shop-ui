@@ -14,23 +14,23 @@ export default function CheckoutEmailForm({ nextStep, checkoutData, customerEmai
     refetchQueries: [
       {
         query: GET_CHECKOUT_ITEMS,
-        variables: { id }
-      }
+        variables: { id },
+      },
     ],
-    onCompleted: data => {
+    onCompleted: (data) => {
       if (data.checkoutEmailUpdateV2.checkoutUserErrors.length > 0) {
         setFormErrors(data.checkoutEmailUpdateV2.checkoutUserErrors);
       } else {
         nextStep();
       }
-    }
+    },
   });
   const updateEmail = () => {
     checkoutEmailUpdateV2({
       variables: {
         checkoutId: id,
-        email
-      }
+        email,
+      },
     });
   };
 
@@ -39,7 +39,7 @@ export default function CheckoutEmailForm({ nextStep, checkoutData, customerEmai
   return (
     <Paper>
       <form
-        onSubmit={e => {
+        onSubmit={(e) => {
           e.preventDefault();
           updateEmail();
         }}
@@ -47,7 +47,7 @@ export default function CheckoutEmailForm({ nextStep, checkoutData, customerEmai
         <Typography align="center" variant="h5">
           Contact information
         </Typography>
-        {formErrors.map(err => (
+        {formErrors.map((err) => (
           <Typography color="error" key={err.message}>
             {`*${err.message}`}
           </Typography>
@@ -60,7 +60,7 @@ export default function CheckoutEmailForm({ nextStep, checkoutData, customerEmai
           label="Email"
           fullWidth
           autoComplete="email"
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <Button fullWidth color="primary" variant="contained" type="submit">
           Set email
@@ -73,5 +73,5 @@ export default function CheckoutEmailForm({ nextStep, checkoutData, customerEmai
 CheckoutEmailForm.propTypes = {
   checkoutData: PropTypes.objectOf(Object).isRequired,
   nextStep: PropTypes.func.isRequired,
-  customerEmail: PropTypes.string.isRequired
+  customerEmail: PropTypes.string.isRequired,
 };
