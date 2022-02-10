@@ -20,7 +20,7 @@
     "html-react-parser": "^1.2.6",
     "leaflet": "^1.6.0",
     "lodash": "^4.17.21",
-    "node-sass": "^6.0.0",
+    "node-sass": "^7.0.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-apollo": "3.0.0",
